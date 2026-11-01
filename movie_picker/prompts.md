@@ -74,4 +74,33 @@ I unblocked it (I believe I have followed the instructions you listed accurately
 
 ## Output 2:
 
-TBD (pasted in with the next prompt)
+The movie picker is built, documented in `movie_picker/prompts.md`, and pushed to your branch. I tested it in a headless browser: every filter, sorting, the random pick and the "show more" button worked, with no errors. I haven't tested it on a real phone.
+
+The new `movie_picker/` folder has three files:
+- **`movie-picker.html`** is the app itself. Double-click it to open; it needs no setup or internet connection.
+- **`movies-data.js`** holds the movie data: 19,236 movies with at least 5,000 IMDb votes, downloaded today (about 1 MB). It's a `.js` file rather than `.json` because browsers block a page opened by double-click from reading a separate `.json` file.
+- **`build_data.py`** re-downloads IMDb's data and rebuilds the data file. Run it whenever you want fresher scores:
+
+```bash
+python3 movie_picker/build_data.py
+```
+
+**The filters**
+- **Genre:** click one or more genres. Results can match *any* or *all* of the ones you pick.
+- **Length:** a minimum and maximum in minutes, with quick buttons such as "Short (≤100)".
+- **Minimum IMDb rating:** starts at 7, with quick buttons for 7+ and 8+.
+- **Year released:** a from and to year, with quick buttons such as "Since 2015".
+- **Minimum IMDb votes:** starts at 10,000, as you asked. You can go as low as 5,000 or as high as 500,000.
+
+**The results table** has your five columns: #, Movie Title, Genre, Year and IMDb Score. It's sorted by score, highest first, and clicking the Title, Year or Score header re-sorts it. Scores of 8 and up show in green, and 7 to 7.9 in yellow. Each title links to its IMDb page. The table shows 100 movies at a time, with a "Show more" button. With the default filters, 4,958 movies match.
+
+**Beyond what you asked for:**
+- A **🎲 Pick one for me** button picks a random movie from your current results.
+- Adult titles are excluded from the data.
+
+**Something to watch for:** brand-new releases sometimes get inflated early ratings. For example, *You Can See Everything* (2026) is currently #3 at 9.2. Raising the vote minimum or setting an end year filters these out.
+
+**Documentation:**
+- I added a new `dataset` tag to the tag table in `CONVENTIONS.md`, since no existing tag fit.
+- In `prompts.md`, Output 2 says "TBD" for now; I'll paste this message in with your next prompt.
+- Still needed from you: the model name in place of "model TBD", and an update to Verified once you've used the app yourself.
