@@ -2,7 +2,7 @@
 
 > - **Files:** movie-picker.html, movies-data.js, build_data.py
 > - **Dates:** 2026-11-01 → 2026-11-01 (about 45 min of work in total, timed by me)
-> - **Defaults:** Claude Code · model TBD · medium effort
+> - **Defaults:** Claude Code · model Opus 5.5 · medium effort
 > - **Status:** keeper
 > - **Use:** used on the live GitHub Pages site 2026-11-01 (filtered to 90–120 min, rating 7+)
 > - **Reusability:** artifact high · prompt pattern low
