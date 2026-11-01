@@ -14,8 +14,8 @@
 # Prompt 1 (app idea and clarifying questions):
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
-> - **Session:** continued · attached: SEIS_606_--_week_8_homework.pdf (earlier in the session)
-> - **Verified:** not-run (questions only, no code yet)
+> - **Session:** continued · attached: none
+> - **Verified:** not-run
 > - **Human edits:** none
 
 Okay, here's the first app idea I have.
@@ -109,7 +109,7 @@ python3 movie_picker/build_data.py
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: screenshot of the repo's GitHub page
-> - **Verified:** not-run (git question, no app changes)
+> - **Verified:** not-run
 > - **Human edits:** none
 
 I don't see the new files, I see something that says "claude/beautiful-cori-4s34iq had recent pushes 3 minutes ago", but I don't see a new folder for the movie_picker. Do I need to do something?
@@ -137,7 +137,7 @@ I also pasted my last reply into `movie_picker/prompts.md` as Output 2 and pushe
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: none
-> - **Verified:** not-run (git change, no app changes)
+> - **Verified:** not-run
 > - **Human edits:** none
 
 Can we put them directly on main from now on? Or is that bad practice? I just don't like the extra level of complexity
@@ -156,7 +156,7 @@ Ready for your second app idea.
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: none
-> - **Verified:** not-run (setup question, no app changes)
+> - **Verified:** not-run
 > - **Human edits:** none. Afterward I turned on GitHub Pages (Settings → Pages, `main`, root).
 
 How can I access the site?
@@ -191,7 +191,7 @@ Let me know once Pages is on and I can check that the link works. Then we can mo
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: none
-> - **Verified:** not-run (setup question, no app changes)
+> - **Verified:** not-run
 > - **Human edits:** none
 
 Where do we keep the address so people can find it and access it easily?
@@ -212,7 +212,7 @@ Remember the links only work once GitHub Pages is turned on (Settings → Pages,
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: screenshot of the live home page
-> - **Verified:** not-run (README edit only; my sandbox can't reach github.io)
+> - **Verified:** not-run
 > - **Human edits:** none
 
 Please add a line to the readme.
@@ -263,7 +263,7 @@ The results table now has a **Length** column, between Genre and Year. It shows 
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: screenshot of the live movie picker
-> - **Verified:** not-run (caching issue, no app changes)
+> - **Verified:** not-run
 > - **Human edits:** none. A hard refresh (Ctrl + Shift + R) showed the new column.
 
 I've gone to the website and tried filtering the movies again but I don't see the new column for length:
@@ -286,11 +286,46 @@ Since this was a caching problem, not a change to the app, I haven't added it to
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: none
-> - **Verified:** agent-tested (home page card renders and links to the app)
+> - **Verified:** agent-tested
 > - **Human edits:** none
 
 it works now, mark it as keeper and add it. Also, add anything necessary to the prompts file to track the work we did. I've timed us and we've been working on this project for ~45 minutes.
 
 ## Output 10:
+
+The movie picker is now a `keeper`, its card is on the home page, and `prompts.md` records every prompt we've had on this project. It's all pushed to `main`; give the site a minute, then hard refresh with **Ctrl + Shift + R**.
+
+**Home page:** the app now has a card in `index.html`, with a new thumbnail at `_thumbs/movie-picker.png`. I tested it in a headless browser: the page shows "3 projects", and clicking the Movie Picker card opens the app.
+
+**`movie_picker/prompts.md`:**
+- **Project header:**
+  - Status is now `keeper`.
+  - **Use** records how you used it on the live site: 90–120 min, rating 7+, from your screenshot.
+  - **Dates** includes your ~45 minutes, noted as timed by you. There's no total-time field in `CONVENTIONS.md`, and the per-prompt **Time** field is for my working time, so I put it there.
+  - **Surprises** now also covers the side-branch mix-up and the caching problem.
+- **All 10 prompts, in order.** I added the setup prompts I had left out: files not showing, pushing to `main`, accessing the site, where to publish the address, and the README line. I also added the cache issue and this request. Each has your exact words and my reply word for word. The old Prompt 3 (Length column) is now Prompt 8.
+- **Verified:** the Length column prompt is now `human-tested`, since you saw it working.
+- **Output 8 is out of date.** It says your message is "Prompt 3" and that the app isn't on the home page yet. Both were true when I wrote it; the convention is to paste outputs exactly, so I left it as is.
+- **Output 10** says "TBD" for now; I'll paste this message in with your next prompt.
+
+The two conversations before the project started (whether I could see the assignment, and following `CONVENTIONS.md`) aren't about any one app, so they aren't in any `prompts.md`.
+
+**Still for you to fill in:**
+- **Model:** it shows as "model TBD" everywhere.
+- **Reusability and Story value:** these are your judgments, so I left them `TBD`.
+- **Takeaway:** it's still marked as a draft.
+
+Ready for your second app idea.
+
+# Prompt 11 (quality review against CONVENTIONS):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** not-run
+> - **Human edits:** none
+
+Can you do a quality review of everything we did so far for the first app and make sure it's following the conventions and that we're not missing anything? If we're all good, then we'll move onto idea #2
+
+## Output 11:
 
 TBD (pasted in with the next prompt)
