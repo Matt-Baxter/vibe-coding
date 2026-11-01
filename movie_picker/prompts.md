@@ -2,18 +2,18 @@
 
 > - **Files:** movie-picker.html, movies-data.js, build_data.py
 > - **Dates:** 2026-11-01 → 2026-11-01 (about 45 min of work in total, timed by me)
-> - **Defaults:** Claude Code · model TBD
+> - **Defaults:** Claude Code · model TBD · medium effort
 > - **Status:** keeper
 > - **Use:** used on the live GitHub Pages site 2026-11-01 (filtered to 90–120 min, rating 7+)
-> - **Reusability:** artifact TBD · prompt pattern TBD
+> - **Reusability:** artifact high · prompt pattern low
 > - **Tags:** dataset, productivity
-> - **Takeaway (draft):** Asking for clarifying questions before any code surfaced the one real decision (where the IMDb data comes from) before it could derail the build.
-> - **Story value:** TBD
+> - **Takeaway:** The app itself took two prompts; most of the ~45 minutes went to everything around it: getting the IMDb data, publishing to GitHub Pages, and checking the data's license.
+> - **Story value:** anecdote
 > - **Surprises:** The cloud sandbox blocked IMDb's download site until I added it to the environment's allowed domains. Brand-new releases with inflated early ratings (e.g. a 2026 film at 9.2) show up near the top of the default list. My first pushes went to a side branch, so nothing showed on `main` until we switched to pushing straight to `main`. After the Length change, the live site kept showing the old version because of browser caching; a hard refresh fixed it.
 
 # Prompt 1 (app idea and clarifying questions):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** not-run
 > - **Human edits:** none
@@ -65,7 +65,7 @@ If I don't hear otherwise, I'll show exactly your five columns and sort by IMDb 
 
 # Prompt 2 (answers and first build):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** human-tested
 > - **Human edits:** none to the files. Before this prompt I added `datasets.imdbws.com` to the cloud environment's allowed domains. Verified raised from agent-tested after I used the live site.
@@ -107,7 +107,7 @@ python3 movie_picker/build_data.py
 
 # Prompt 3 (new files not showing on GitHub):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: screenshot of the repo's GitHub page
 > - **Verified:** not-run
 > - **Human edits:** none
@@ -135,7 +135,7 @@ I also pasted my last reply into `movie_picker/prompts.md` as Output 2 and pushe
 
 # Prompt 4 (push straight to main):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** not-run
 > - **Human edits:** none
@@ -154,7 +154,7 @@ Ready for your second app idea.
 
 # Prompt 5 (how to access the site):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** not-run
 > - **Human edits:** none. Afterward I turned on GitHub Pages (Settings → Pages, `main`, root).
@@ -189,7 +189,7 @@ Let me know once Pages is on and I can check that the link works. Then we can mo
 
 # Prompt 6 (where to publish the address):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** not-run
 > - **Human edits:** none
@@ -210,7 +210,7 @@ Remember the links only work once GitHub Pages is turned on (Settings → Pages,
 
 # Prompt 7 (README link; app missing from home page):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: screenshot of the live home page
 > - **Verified:** not-run
 > - **Human edits:** none
@@ -238,7 +238,7 @@ If you'd rather list it now, before you've tried it, I can. That would bend the 
 
 # Prompt 8 (add a Length column):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** human-tested
 > - **Human edits:** none. Verified raised from agent-tested after I saw the column on the live site (Prompt 9).
@@ -261,7 +261,7 @@ The results table now has a **Length** column, between Genre and Year. It shows 
 
 # Prompt 9 (Length column not showing on the live site):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: screenshot of the live movie picker
 > - **Verified:** not-run
 > - **Human edits:** none. A hard refresh (Ctrl + Shift + R) showed the new column.
@@ -284,7 +284,7 @@ Since this was a caching problem, not a change to the app, I haven't added it to
 
 # Prompt 10 (mark as keeper, add to home page, complete the record):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** agent-tested
 > - **Human edits:** none
@@ -319,7 +319,7 @@ Ready for your second app idea.
 
 # Prompt 11 (quality review against CONVENTIONS):
 
-> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Tool:** 2026-11-01
 > - **Session:** continued · attached: none
 > - **Verified:** not-run
 > - **Human edits:** none
@@ -327,5 +327,53 @@ Ready for your second app idea.
 Can you do a quality review of everything we did so far for the first app and make sure it's following the conventions and that we're not missing anything? If we're all good, then we'll move onto idea #2
 
 ## Output 11:
+
+The first app mostly follows the conventions. I fixed two small slips and pushed them to `main`. One issue needs your decision before we start idea #2.
+
+**Fixed:**
+- **Verified fields.** The convention allows exactly one value. On several prompts I'd added notes in brackets, like "not-run (setup question, no app changes)". They now show just the value.
+- **Prompt 1's attachments.** It said the assignment PDF was attached, but you attached that earlier, not with that prompt. It now says `none`.
+- **Record kept up to date.** I pasted Output 10 and recorded this review as Prompt 11. Output 11 says "TBD" until your next message.
+
+**Already correct:**
+- The `movie_picker/` folder name, the `movie-picker.html` file name, and `prompts.md` with its three layers.
+- Every header field is present, with `TBD` where unknown.
+- All 11 prompts are in order, each with your exact words, and outputs are pasted word for word, with no git commands or CLI footers.
+- Status is `keeper`, and the app has a card and thumbnail in `index.html`.
+- The new `dataset` tag is in the tag table.
+- IMDb is credited on the page and in the data file.
+
+**Needs your decision: IMDb's data terms.** Earlier I said IMDb's personal, non-commercial license "covers a homework project." That was too confident. As I recall, the terms also say the data can't be republished or used to build an online database of movie information, except for individual personal use. A trimmed copy of that data (`movies-data.js`) is now in a public repo and served on your public site. I couldn't check the terms' current wording from here; they're at https://developer.imdb.com/non-commercial-datasets/. Your options:
+1. **Leave it as is.** It's a small, non-commercial class project, and the realistic risk is low. It is still a gray area, and you'd be the one taking it on.
+2. **Make the repo private.** This also turns off your free GitHub Pages site and hides the repo from your professor unless you add them.
+3. **Take the data file out of the repo.** Anyone using the app would run `build_data.py` themselves to create it, and the live site would no longer work.
+
+I'd go with option 1 and add a one-line note to the README saying the data is IMDb's, for personal, non-commercial use. You may also want to check with your professor, especially since this would be a good point to raise in class.
+
+**Minor, optional:**
+- **Header row doesn't stay pinned.** When you scroll a long list, the table's header row scrolls away. It was meant to stay at the top, and it's an easy fix.
+- **"Tool" lines repeat the defaults.** Every prompt's Tool line repeats "Claude Code · model TBD". The convention says to leave out repeats, but its own example repeats them, so I left them.
+- **`productivity` tag is a loose fit.** That tag is for "planners, matrices, lists". It's your call whether to keep it.
+
+**Still yours to fill in:** the model name, Reusability, Story value, and a final Takeaway.
+
+Tell me which option you want for the IMDb data, and whether to fix the header row. After that we're ready for idea #2.
+
+# Prompt 12 (README data note, pinned header, fill in header fields):
+
+> - **Tool:** 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Option 1 with the README note, and fix the header
+
+Why can't you fill these in?
+
+model name (Opus 5.5, medium effort), Reusability (high for the site, low for the prompts), Story value (not sure?), and a final Takeaway (not sure?).
+
+I'd prefer you fill in those fields, if possible.
+
+## Output 12:
 
 TBD (pasted in with the next prompt)

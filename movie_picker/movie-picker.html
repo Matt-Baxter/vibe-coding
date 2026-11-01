@@ -85,7 +85,10 @@
   .pick.show { display: block; }
   .pick a { color: var(--accent); font-weight: 700; font-size: 1.15rem; }
 
-  .table-wrap { overflow-x: auto; border-radius: var(--radius); background: var(--panel); }
+  /* overflow: clip keeps the rounded corners without creating a scroll box,
+     so the sticky header pins to the page. Narrow screens scroll sideways instead. */
+  .table-wrap { overflow: clip; border-radius: var(--radius); background: var(--panel); }
+  @media (max-width: 700px) { .table-wrap { overflow-x: auto; } }
   table { width: 100%; border-collapse: collapse; font-size: .95rem; }
   th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #2f2b40; }
   th { background: var(--panel-2); position: sticky; top: 0; font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
