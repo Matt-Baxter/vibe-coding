@@ -1,5 +1,7 @@
 ## Overview
 
+**Live site:** https://matt-baxter.github.io/vibe-coding/
+
 This repository includes some example "apps" that were vibe coded, and intended to be used as demonstration for SEIS 606: Vibe Coding and/or for personal use.
 
 The idea is to develop a standard/set of conventions (see [CONVENTIONS.md](./CONVENTIONS.md)) that can be followed by anyone who is [vibe coding](https://en.wikipedia.org/wiki/Vibe_coding).
