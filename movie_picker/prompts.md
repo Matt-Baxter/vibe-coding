@@ -4,7 +4,7 @@
 > - **Dates:** 2026-11-01 → 2026-11-01
 > - **Defaults:** Claude Code · model TBD
 > - **Status:** prototype
-> - **Use:** none yet
+> - **Use:** tried on the live GitHub Pages site 2026-11-01
 > - **Reusability:** artifact TBD · prompt pattern TBD
 > - **Tags:** dataset, productivity
 > - **Takeaway (draft):** Asking for clarifying questions before any code surfaced the one real decision (where the IMDb data comes from) before it could derail the build.
@@ -67,8 +67,8 @@ If I don't hear otherwise, I'll show exactly your five columns and sort by IMDb 
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: none
-> - **Verified:** agent-tested
-> - **Human edits:** none to the files. Before this prompt I added `datasets.imdbws.com` to the cloud environment's allowed domains.
+> - **Verified:** human-tested
+> - **Human edits:** none to the files. Before this prompt I added `datasets.imdbws.com` to the cloud environment's allowed domains. Verified raised from agent-tested after I used the live site.
 
 I unblocked it (I believe I have followed the instructions you listed accurately), movie_picker is fine, let's try 10k votes default (feels less arbitary than 25k)
 
@@ -104,3 +104,16 @@ python3 movie_picker/build_data.py
 - I added a new `dataset` tag to the tag table in `CONVENTIONS.md`, since no existing tag fit.
 - In `prompts.md`, Output 2 says "TBD" for now; I'll paste this message in with your next prompt.
 - Still needed from you: the model name in place of "model TBD", and an update to Verified once you've used the app yourself.
+
+# Prompt 3 (add a Length column):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+The site works, the only thing is I'd like for the output to have the length of the movie as well (in __ hr __ min format, ideally, not just like 125 minutes)
+
+## Output 3:
+
+TBD (pasted in with the next prompt)

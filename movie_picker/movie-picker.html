@@ -97,6 +97,7 @@
   td.title a { color: var(--text); text-decoration: none; font-weight: 600; }
   td.title a:hover { color: var(--accent); text-decoration: underline; }
   td.genre { color: var(--muted); font-size: .88rem; }
+  td.len { white-space: nowrap; }
   tbody tr:hover { background: rgba(255,255,255,.03); }
   tbody tr.highlight { background: rgba(245,197,24,.15); }
   .score { font-weight: 700; }
@@ -191,6 +192,7 @@
           <th class="num">#</th>
           <th><button type="button" data-sort="title">Movie Title <span class="arrow"></span></button></th>
           <th>Genre</th>
+          <th class="num"><button type="button" data-sort="runtime">Length <span class="arrow"></span></button></th>
           <th class="num"><button type="button" data-sort="year">Year <span class="arrow"></span></button></th>
           <th class="num"><button type="button" data-sort="rating">IMDb Score <span class="arrow"></span></button></th>
         </tr>
@@ -287,7 +289,7 @@
 
   // ---- Sorting ----
   let sort = { key: 'rating', dir: -1 };
-  const DEFAULT_DIR = { rating: -1, year: -1, title: 1 };
+  const DEFAULT_DIR = { rating: -1, year: -1, title: 1, runtime: 1 };
   document.querySelectorAll('th button[data-sort]').forEach(b => {
     b.addEventListener('click', () => {
       const k = b.dataset.sort;
@@ -298,6 +300,8 @@
 
   function compare(a, b) {
     const k = sort.key;
+    // Unknown lengths (0) always go to the bottom when sorting by length.
+    if (k === 'runtime' && !a.runtime !== !b.runtime) return a.runtime ? -1 : 1;
     const c = k === 'title' ? a.title.localeCompare(b.title) : a[k] - b[k];
     return c !== 0 ? c * sort.dir : b.votes - a.votes; // tie-break: more popular first
   }
@@ -341,12 +345,19 @@
     renderMore();
 
     $('count').innerHTML = `<strong>${current.length.toLocaleString()}</strong> movie${current.length === 1 ? '' : 's'} match`;
-    const names = { rating: 'IMDb score', year: 'year', title: 'title' };
-    const dirWord = sort.key === 'title' ? (sort.dir > 0 ? 'A→Z' : 'Z→A') : (sort.dir > 0 ? 'low→high' : 'high→low');
+    const names = { rating: 'IMDb score', year: 'year', title: 'title', runtime: 'length' };
+    const dirWord = sort.key === 'title' ? (sort.dir > 0 ? 'A→Z' : 'Z→A') : sort.key === 'runtime' ? (sort.dir > 0 ? 'shortest first' : 'longest first') : (sort.dir > 0 ? 'low→high' : 'high→low');
     $('sortInfo').textContent = `Sorted by ${names[sort.key]} (${dirWord}) · click a column header to change`;
     document.querySelectorAll('th button[data-sort]').forEach(b => {
       b.querySelector('.arrow').textContent = b.dataset.sort === sort.key ? (sort.dir > 0 ? '▲' : '▼') : '';
     });
+  }
+
+  // 125 -> "2 hr 5 min", 45 -> "45 min", 0 (unknown) -> "—"
+  function fmtLength(mins) {
+    if (!mins) return '—';
+    const h = Math.floor(mins / 60), m = mins % 60;
+    return h ? `${h} hr ${m} min` : `${m} min`;
   }
 
   function scoreClass(r) { return r >= 8 ? 'good' : r >= 7 ? 'ok' : 'meh'; }
@@ -355,8 +366,9 @@
     const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     return `<tr data-i="${i}">
       <td class="num idx">${i + 1}</td>
-      <td class="title"><a href="${m.url}" target="_blank" rel="noopener" title="${m.runtime ? m.runtime + ' min · ' : ''}${m.votes.toLocaleString()} votes">${esc(m.title)}</a></td>
+      <td class="title"><a href="${m.url}" target="_blank" rel="noopener" title="${m.votes.toLocaleString()} IMDb votes">${esc(m.title)}</a></td>
       <td class="genre">${esc(m.genreText)}</td>
+      <td class="num len">${fmtLength(m.runtime)}</td>
       <td class="num">${m.year}</td>
       <td class="num"><span class="score ${scoreClass(m.rating)}">${m.rating.toFixed(1)}</span></td>
     </tr>`;
@@ -365,7 +377,7 @@
   function renderMore() {
     const tbody = $('results');
     if (!current.length) {
-      tbody.innerHTML = '<tr><td colspan="5" class="empty">No movies match. Try loosening a filter.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="empty">No movies match. Try loosening a filter.</td></tr>';
       $('more').hidden = true;
       return;
     }
@@ -392,7 +404,7 @@
     const row = document.querySelector(`tbody tr[data-i="${i}"]`);
     row.classList.add('highlight');
     box.innerHTML = `🎲 Tonight: <a href="${m.url}" target="_blank" rel="noopener"></a>
-      <span class="hint"> · ${m.year} · ${m.genreText} · ${m.runtime ? m.runtime + ' min · ' : ''}IMDb ${m.rating.toFixed(1)} · row #${i + 1}</span>`;
+      <span class="hint"> · ${m.year} · ${m.genreText} · ${m.runtime ? fmtLength(m.runtime) + ' · ' : ''}IMDb ${m.rating.toFixed(1)} · row #${i + 1}</span>`;
     box.querySelector('a').textContent = m.title;
     box.classList.add('show');
     box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
