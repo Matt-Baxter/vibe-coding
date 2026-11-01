@@ -116,6 +116,7 @@ Use these, and add a new one only when none fits, then add it here.
 | `source-material` | Built from an attached document or pasted code |
 | `brainstorm` | Ideas or design discussion rather than a build |
 | `site` | Part of the personal site |
+| `dataset` | Built on a downloaded dataset, with a script to refresh it |
 
 ## Index
 
