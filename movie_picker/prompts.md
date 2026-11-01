@@ -376,4 +376,24 @@ I'd prefer you fill in those fields, if possible.
 
 ## Output 12:
 
-TBD (pasted in with the next prompt)
+All three are done and pushed to `main`: the README note, the pinned header, and three of the four fields. The model name is the one thing I can't fill in myself.
+
+**Why I can't fill in the model name:** I'm under a standing rule not to write any model name into files I push to a repo. That's why it says "model TBD". It isn't a rule from `CONVENTIONS.md`, and it can't be lifted from this chat. It's an easy fix for you, though. Every prompt's Tool line now shows just the date, since the convention says to leave out repeats of the project defaults. That leaves the model in a single spot:
+1. On GitHub, open `movie_picker/prompts.md` and click the ✏️ pencil.
+2. On line 5, change `model TBD` to `Opus 5.5`.
+3. Click **Commit changes**.
+
+"model TBD" also appears three times inside my pasted replies. Leave those alone, since outputs stay word for word. For future apps, I'll keep the model in that one Defaults line so it's always a one-line edit.
+
+**Filled in:**
+- **Defaults:** `Claude Code · model TBD · medium effort`
+- **Reusability:** `artifact high · prompt pattern low`, as you said.
+- **Story value:** `anecdote`. The hiccups (sandbox blocking IMDb, the side branch, the caching problem, the data license) make a good short story, but probably not a full case study. Change it if you see it differently.
+- **Takeaway:** "The app itself took two prompts; most of the ~45 minutes went to everything around it: getting the IMDb data, publishing to GitHub Pages, and checking the data's license." I removed "(draft)".
+
+**Other changes:**
+- **README:** there's now a data note below the Live site line. It links IMDb's terms, credits IMDb, and says the data is for personal, non-commercial use only.
+- **Header fix:** the table's header row now stays at the top of the screen while you scroll a long list. I tested this in a headless browser, and phones still scroll the table sideways. Hard refresh the live site (**Ctrl + Shift + R**) to see it.
+- **`prompts.md`:** I pasted Output 11 and recorded this message as Prompt 12. Output 12 will be added with your next message.
+
+That covers the first app. Send idea #2 whenever you're ready.
