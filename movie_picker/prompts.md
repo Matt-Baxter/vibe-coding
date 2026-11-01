@@ -1,15 +1,15 @@
 # Project: Movie Picker
 
 > - **Files:** movie-picker.html, movies-data.js, build_data.py
-> - **Dates:** 2026-11-01 → 2026-11-01
+> - **Dates:** 2026-11-01 → 2026-11-01 (about 45 min of work in total, timed by me)
 > - **Defaults:** Claude Code · model TBD
-> - **Status:** prototype
-> - **Use:** tried on the live GitHub Pages site 2026-11-01
+> - **Status:** keeper
+> - **Use:** used on the live GitHub Pages site 2026-11-01 (filtered to 90–120 min, rating 7+)
 > - **Reusability:** artifact TBD · prompt pattern TBD
 > - **Tags:** dataset, productivity
 > - **Takeaway (draft):** Asking for clarifying questions before any code surfaced the one real decision (where the IMDb data comes from) before it could derail the build.
 > - **Story value:** TBD
-> - **Surprises:** The cloud sandbox blocked IMDb's download site until I added it to the environment's allowed domains. Brand-new releases with inflated early ratings (e.g. a 2026 film at 9.2) show up near the top of the default list.
+> - **Surprises:** The cloud sandbox blocked IMDb's download site until I added it to the environment's allowed domains. Brand-new releases with inflated early ratings (e.g. a 2026 film at 9.2) show up near the top of the default list. My first pushes went to a side branch, so nothing showed on `main` until we switched to pushing straight to `main`. After the Length change, the live site kept showing the old version because of browser caching; a hard refresh fixed it.
 
 # Prompt 1 (app idea and clarifying questions):
 
@@ -105,15 +105,192 @@ python3 movie_picker/build_data.py
 - In `prompts.md`, Output 2 says "TBD" for now; I'll paste this message in with your next prompt.
 - Still needed from you: the model name in place of "model TBD", and an update to Verified once you've used the app yourself.
 
-# Prompt 3 (add a Length column):
+# Prompt 3 (new files not showing on GitHub):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: screenshot of the repo's GitHub page
+> - **Verified:** not-run (git question, no app changes)
+> - **Human edits:** none
+
+I don't see the new files, I see something that says "claude/beautiful-cori-4s34iq had recent pushes 3 minutes ago", but I don't see a new folder for the movie_picker. Do I need to do something?
+
+## Output 3:
+
+Nothing went wrong. The files are on GitHub, just not on the branch you're looking at.
+
+My work goes to a separate branch, `claude/beautiful-cori-4s34iq`. Your screenshot shows `main`, which only has the original files. That's why the yellow banner says the branch "had recent pushes."
+
+**To see the files now:** click the **main** dropdown (top left of the file list) and choose `claude/beautiful-cori-4s34iq`. The `movie_picker/` folder will be there.
+
+**To get them onto `main`:** merge the branch.
+1. Click **Compare & pull request** in the yellow banner.
+2. **Check the base repository first.** Because your repo is a fork, GitHub may default to sending the pull request to your professor's repo (`paulkaefer/vibe-coding`). Change the base to `Matt-Baxter/vibe-coding` with base branch `main`.
+3. Click **Create pull request**, then **Merge pull request**.
+
+I can create the pull request for you if you'd like. You'd still click Merge.
+
+Merging after each app or once at the end both work. Merging after each app means `main`, which is what your professor sees first, is always current. I'll keep pushing to the same branch either way.
+
+I also pasted my last reply into `movie_picker/prompts.md` as Output 2 and pushed it. This git question isn't part of building the app, so I left it out of `prompts.md`. Ready for your next app idea, or more changes to the movie picker.
+
+# Prompt 4 (push straight to main):
 
 > - **Tool:** Claude Code · model TBD · 2026-11-01
 > - **Session:** continued · attached: none
-> - **Verified:** agent-tested
+> - **Verified:** not-run (git change, no app changes)
 > - **Human edits:** none
+
+Can we put them directly on main from now on? Or is that bad practice? I just don't like the extra level of complexity
+
+## Output 4:
+
+`main` now has `movie_picker/` and the `CONVENTIONS.md` change. Refresh the GitHub page and the folder will show on the main view.
+
+From now on I'll commit and push straight to `main`, so you won't need pull requests or to merge anything. The old `claude/beautiful-cori-4s34iq` branch still exists on GitHub, but everything in it is now in `main`. You can ignore it, or delete it from the **Branches** page.
+
+The yellow "Compare & pull request" banner may stay up for a while. You can ignore it too, since there's nothing left to merge.
+
+Ready for your second app idea.
+
+# Prompt 5 (how to access the site):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** not-run (setup question, no app changes)
+> - **Human edits:** none. Afterward I turned on GitHub Pages (Settings → Pages, `main`, root).
+
+How can I access the site?
+
+## Output 5:
+
+There are two ways to open it.
+
+## Option 1: GitHub Pages (recommended)
+This gives you a real web address you can open on any device and share with your class. It's free for public repos and takes about a minute to set up.
+
+1. On your repo's GitHub page, go to **Settings → Pages** (in the left sidebar).
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Set **Branch** to `main` and the folder to `/ (root)`, then click **Save**.
+4. Wait a minute or two, then refresh that page. It will show your site's address.
+
+Once it's live, the movie picker will be at:
+
+**https://matt-baxter.github.io/vibe-coding/movie_picker/movie-picker.html**
+
+The site's home page (https://matt-baxter.github.io/vibe-coding/) will be your professor's `index.html` landing page. Every later push to `main` updates the site automatically within a minute or so.
+
+## Option 2: Open it on your computer
+1. On the repo page, click **Code → Download ZIP** and unzip it.
+2. Open the `movie_picker` folder and double-click `movie-picker.html`.
+
+Keep `movies-data.js` in the same folder as the HTML file, or the page will show "Movie data not found."
+
+Let me know once Pages is on and I can check that the link works. Then we can move on to your second app.
+
+# Prompt 6 (where to publish the address):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** not-run (setup question, no app changes)
+> - **Human edits:** none
+
+Where do we keep the address so people can find it and access it easily?
+
+## Output 6:
+
+The repo already has a place for this. `CONVENTIONS.md` makes `index.html` the public landing page: once Pages is on, it becomes your site's home page, at https://matt-baxter.github.io/vibe-coding/. Each app gets a card there, from the `PROJECTS` list near line 77 of `index.html`.
+
+The convention has one condition: an app is added there only once its status is `keeper`. The movie picker is still a `prototype`, so it isn't listed yet. Once you've used it and are happy with it, tell me and I'll change its status to `keeper` and add its card. I can also make a thumbnail image like the other apps have.
+
+To make the site itself easy to find, I'd do two more things:
+1. **Link the site from the repo page.** On GitHub, click the ⚙️ gear next to **About** (right side of the repo page) and tick **Use your GitHub Pages website**. The site link will then appear under "Week 8 homework for SEIS 606…". You have to do this one yourself.
+2. **Add a link at the top of the README.** I'd add one short line like "**Live site:** https://matt-baxter.github.io/vibe-coding/". The README is your professor's file, so I'll only add that line if you say so.
+
+Remember the links only work once GitHub Pages is turned on (Settings → Pages, from my last message).
+
+# Prompt 7 (README link; app missing from home page):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: screenshot of the live home page
+> - **Verified:** not-run (README edit only; my sandbox can't reach github.io)
+> - **Human edits:** none
+
+Please add a line to the readme.
+
+Also, the page only shows two projects, the movie_picker isn't there
+
+## Output 7:
+
+I added **Live site:** https://matt-baxter.github.io/vibe-coding/ at the top of the README and pushed it to `main`.
+
+The movie picker is missing from the home page because of the rule in `CONVENTIONS.md` I mentioned last time: only apps marked `keeper` get a card there. It's still a `prototype`, since you haven't used it yet. It is on the site, just not linked from the home page:
+
+**https://matt-baxter.github.io/vibe-coding/movie_picker/movie-picker.html**
+
+My environment can't reach github.io, so I couldn't check that link myself. If it doesn't load, tell me what you see.
+
+To put it on the home page, open the link above and try it out. If you're happy with it, tell me roughly how you used it (for example, "picked a movie for tonight, worked fine"). I'll then:
+- change its status to `keeper` and record your use in the **Use** field,
+- raise **Verified** to `human-tested`,
+- add its card to `index.html`, with a thumbnail like the other apps.
+
+If you'd rather list it now, before you've tried it, I can. That would bend the convention, though, so I'd note the exception in `prompts.md`.
+
+# Prompt 8 (add a Length column):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** human-tested
+> - **Human edits:** none. Verified raised from agent-tested after I saw the column on the live site (Prompt 9).
 
 The site works, the only thing is I'd like for the output to have the length of the movie as well (in __ hr __ min format, ideally, not just like 125 minutes)
 
-## Output 3:
+## Output 8:
+
+The results table now has a **Length** column, between Genre and Year. It shows times like **2 hr 22 min**, and movies under an hour show just minutes, like **45 min**. I tested it in a headless browser with no errors, and every length on the page matched that format. The change is pushed to `main`, so the live site should update within a minute or two.
+
+- **Sorting:** click the Length header to sort shortest first, and click again for longest first. The single movie with no listed length shows "—" and always sorts to the bottom.
+- **Random pick:** the "🎲 Tonight" banner uses the same hr/min format.
+- **Length filter:** the min/max boxes are still in minutes, which is easier to type than hours and minutes.
+
+**Documentation in `movie_picker/prompts.md`:**
+- Your message is recorded as Prompt 3. Output 3 says "TBD" for now; I'll paste this message in with your next prompt.
+- You said the site works, so I raised Prompt 2's Verified from `agent-tested` to `human-tested`, with a note in Human edits.
+- I set the project's **Use** field to "tried on the live GitHub Pages site 2026-11-01".
+- The status is still `prototype`, so the app isn't on the home page yet. Say the word and I'll mark it `keeper` and add its card.
+
+# Prompt 9 (Length column not showing on the live site):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: screenshot of the live movie picker
+> - **Verified:** not-run (caching issue, no app changes)
+> - **Human edits:** none. A hard refresh (Ctrl + Shift + R) showed the new column.
+
+I've gone to the website and tried filtering the movies again but I don't see the new column for length:
+
+## Output 9:
+
+Your site is fine. Your browser is showing an older copy it saved before the update.
+
+The change made it all the way through: it's on `main`, and GitHub's site update for it finished successfully at 05:19 UTC. GitHub tells browsers they can reuse a saved copy of a page for up to 10 minutes, so you got the old version.
+
+To get the new version, do a hard refresh, which skips the saved copy:
+- **Windows (Chrome/Edge):** press **Ctrl + Shift + R**, or **Ctrl + F5**
+- **Mac:** press **Cmd + Shift + R**
+
+Or just wait about 10 minutes and reload normally. You should then see the **Length** column between Genre and Year, showing times like "1 hr 36 min". If it still isn't there after a hard refresh, send me another screenshot.
+
+Since this was a caching problem, not a change to the app, I haven't added it to `prompts.md`.
+
+# Prompt 10 (mark as keeper, add to home page, complete the record):
+
+> - **Tool:** Claude Code · model TBD · 2026-11-01
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested (home page card renders and links to the app)
+> - **Human edits:** none
+
+it works now, mark it as keeper and add it. Also, add anything necessary to the prompts file to track the work we did. I've timed us and we've been working on this project for ~45 minutes.
+
+## Output 10:
 
 TBD (pasted in with the next prompt)
