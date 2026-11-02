@@ -1,15 +1,15 @@
 # Project: Habit Tracker
 
 > - **Files:** habit-tracker.html
-> - **Dates:** 2026-11-02 → 2026-11-02
+> - **Dates:** 2026-11-02 → 2026-11-02 (about 22 min of work in total, timed by me)
 > - **Defaults:** Claude Code · model TBD · medium effort
-> - **Status:** prototype
-> - **Use:** none yet
-> - **Reusability:** artifact TBD · prompt pattern TBD
+> - **Status:** keeper
+> - **Use:** tried on the live GitHub Pages site 2026-11-02
+> - **Reusability:** artifact high · prompt pattern medium
 > - **Tags:** single-file-html, productivity, localStorage, export-import
-> - **Takeaway (draft):** Settling storage, number-habit goals and what happens to past days before any code meant the whole app came out of one build prompt.
-> - **Story value:** TBD
-> - **Surprises:** TBD
+> - **Takeaway:** Settling storage, number-habit goals and what happens to past days before any code meant the whole app came out of one build prompt.
+> - **Story value:** anecdote
+> - **Surprises:** With no save button I wasn't sure anything was saved, but the ✔ marks that appear as each habit is done turned out to be enough confirmation. Asking up front what removing a habit should do to past days caught a design question I hadn't thought about.
 
 # Prompt 1 (app idea and clarifying questions):
 
@@ -60,8 +60,8 @@ I'll also add a way to fill in or fix earlier days, in case you forget to log on
 
 > - **Tool:** 2026-11-02
 > - **Session:** continued · attached: none
-> - **Verified:** agent-tested
-> - **Human edits:** none
+> - **Verified:** human-tested
+> - **Human edits:** none. Verified raised from agent-tested after I used the live site (Prompts 3–4).
 
 1. Browser only works for now to keep it simple
 2. Yes exactly. 200 mg or less for caffeine, 8 hrs or more for sleep
@@ -108,5 +108,28 @@ It's one file, `habit_tracker/habit-tracker.html`, with three tabs:
 Do the habits inputted autosave? I don't see a save button
 
 ## Output 3:
+
+Yes, everything saves automatically to your browser as you go. There's no save button because there's nothing to save by hand.
+
+- **Checkboxes** save the moment you click them.
+- **Number boxes** (Caffeine, Hours of sleep) save when you leave the box: press Enter, Tab, or click anywhere else. The ✔ and the percentage update at the same moment, which is a handy sign that it saved.
+- **Changes on the Habits tab** (adding, removing, reordering, goals) also save straight away. A short "Goal updated" or "Added …" message confirms each one.
+
+Saved data survives closing the tab, reloading, and restarting your browser. I checked this in testing.
+
+**One gap:** if you type a number and close the tab without leaving the box first, that number isn't saved. I can make number boxes save on every keystroke and add a small "Saved ✓" note so you can always see that it worked. That's a small change; just say the word.
+
+**Documentation:** I pasted Output 2 into `habit_tracker/prompts.md` and recorded this question as Prompt 3. Output 3 says "TBD" for now; I'll paste this message in with your next prompt.
+
+# Prompt 4 (mark as keeper, add to home page):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+I think it's good how it is. The check marks are good confirmation for if something is saved or not. I think we can mark this as a keeper and add the site. This one we've spent 22 minutes on
+
+## Output 4:
 
 TBD (pasted in with the next prompt)
