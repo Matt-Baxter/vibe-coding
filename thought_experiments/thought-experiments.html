@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thought Experiments</title>
+<style>
+  :root {
+    --bg: #f5f2ec;
+    --panel: #fffdf9;
+    --panel-2: #efe9df;
+    --text: #22201c;
+    --muted: #6f685d;
+    --border: #e1d9cb;
+    --accent: #6c4ab6;
+    --accent-soft: #ebe4f7;
+    --gold: #b7862a;
+    --radius: 16px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15131a;
+      --panel: #1e1b25;
+      --panel-2: #2a2633;
+      --text: #ece8f2;
+      --muted: #a39cb0;
+      --border: #363042;
+      --accent: #a98bf0;
+      --accent-soft: #2e2645;
+      --gold: #e0b45a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 16px 56px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; }
+  h1 { font-size: 2.1rem; margin: 0 0 6px; }
+  h2 { font-size: 1.5rem; margin: 0 0 10px; }
+  h3 { font-size: 1.15rem; margin: 0 0 6px; }
+  .muted { color: var(--muted); }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 16px; }
+  .hidden { display: none !important; }
+  .btn {
+    border: 1px solid var(--border); background: var(--panel-2); color: var(--text);
+    border-radius: 12px; padding: 10px 16px; font: inherit; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .btn.link { background: none; border: 0; color: var(--muted); padding: 6px 4px; text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Intro */
+  .lengths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+  .length {
+    text-align: left; border: 2px solid var(--border); background: var(--panel); color: var(--text);
+    border-radius: 14px; padding: 14px; cursor: pointer; font: inherit;
+  }
+  .length b { display: block; font-size: 1.05rem; }
+  .length span { color: var(--muted); font-size: .88rem; }
+  .length:hover, .length[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .themes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pill { font-size: .78rem; padding: 3px 10px; border-radius: 999px; background: var(--panel-2); color: var(--muted); }
+  .resume { border-color: var(--accent); background: var(--accent-soft); display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+
+  /* Question */
+  .progress { height: 6px; background: var(--panel-2); border-radius: 999px; overflow: hidden; margin: 6px 0 18px; }
+  .progress i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .25s; }
+  .qmeta { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); }
+  .scenario { font-family: var(--serif); font-size: 1.12rem; margin: 6px 0 14px; }
+  .ask { font-weight: 600; margin-bottom: 12px; }
+  .options { display: grid; gap: 10px; }
+  .option {
+    text-align: left; border: 2px solid var(--border); background: var(--panel); color: var(--text);
+    border-radius: 14px; padding: 13px 16px; font: inherit; cursor: pointer; transition: border-color .12s, background .12s;
+  }
+  .option:hover { border-color: var(--accent); }
+  .option.chosen { border-color: var(--accent); background: var(--accent-soft); }
+  .qnav { display: flex; justify-content: space-between; margin-top: 16px; }
+
+  /* Results */
+  .headline { text-align: center; }
+  .headline .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--muted); }
+  .headline h2 { font-size: 1.9rem; margin: 6px 0; }
+  .axis { margin: 16px 0 6px; }
+  .axis-labels { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); }
+  .axis-track { position: relative; height: 10px; background: linear-gradient(90deg, var(--panel-2), var(--accent-soft), var(--panel-2)); border-radius: 999px; margin: 6px 0; }
+  .axis-track::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--border); }
+  .axis-dot { position: absolute; top: 50%; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 3px solid var(--panel); transform: translate(-50%, -50%); box-shadow: 0 1px 4px rgba(0,0,0,.25); }
+  .axis-verdict { font-size: .88rem; font-weight: 600; text-align: center; }
+  .school { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .school:last-child { border-bottom: 0; }
+  .school .who { color: var(--muted); font-size: .88rem; }
+  .school .why { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+  .rank { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: .85rem; font-weight: 700; margin-right: 8px; }
+  .tension { border-left: 4px solid var(--gold); padding: 6px 0 6px 14px; margin: 14px 0; }
+  .tension .pair { font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
+  details summary { cursor: pointer; font-weight: 600; }
+  .answer-row { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .92rem; }
+  .answer-row:last-child { border-bottom: 0; }
+  .answer-row span { color: var(--muted); }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 8px; }
+
+  @media (max-width: 560px) {
+    .lengths { grid-template-columns: 1fr; }
+    h1 { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro">
+    <h1>🤔 Thought Experiments</h1>
+    <p class="muted">Classic puzzles from philosophy and AI. Answer honestly, there are no right answers. At the end you'll see where your answers land, which thinkers you're closest to, and where your own answers pull against each other.</p>
+
+    <div class="card resume hidden" id="resumeCard">
+      <div><b>Pick up where you left off?</b><div class="muted" id="resumeText"></div></div>
+      <div style="display:flex; gap:8px">
+        <button class="btn primary" id="resumeBtn">Resume</button>
+        <button class="btn" id="discardBtn">Start fresh</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>How many?</h3>
+      <div class="lengths" id="lengths"></div>
+      <div class="muted" style="font-size:.88rem">Shorter runs still draw from every theme. Your progress saves as you go, so you can stop and come back.</div>
+      <div class="themes" id="themePills"></div>
+      <div style="margin-top:16px"><button class="btn primary" id="startBtn">Begin</button></div>
+    </div>
+  </section>
+
+  <!-- QUESTION -->
+  <section id="quiz" class="hidden">
+    <div class="qmeta"><span id="qTheme"></span><span id="qCount"></span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="card">
+      <h2 id="qTitle"></h2>
+      <p class="scenario" id="qText"></p>
+      <div class="ask" id="qAsk"></div>
+      <div class="options" id="qOptions"></div>
+    </div>
+    <div class="qnav">
+      <button class="btn" id="backBtn">← Back</button>
+      <button class="btn link" id="quitBtn">Save and exit</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="hidden">
+    <div class="card headline">
+      <div class="eyebrow" id="rCount"></div>
+      <h2 id="rHeadline"></h2>
+      <div class="muted" id="rSub"></div>
+    </div>
+    <div class="card">
+      <h3>Where you land</h3>
+      <div id="rAxes"></div>
+    </div>
+    <div class="card">
+      <h3>Thinkers you're closest to</h3>
+      <div id="rSchools"></div>
+    </div>
+    <div class="card">
+      <h3>Your tensions</h3>
+      <p class="muted" style="margin-top:0">Places where your answers pull against each other. Every serious position has some; they're where the interesting philosophy is.</p>
+      <div id="rTensions"></div>
+    </div>
+    <div class="card">
+      <details>
+        <summary>Your answers</summary>
+        <div id="rAnswers" style="margin-top:10px"></div>
+      </details>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="retakeBtn">Retake with new questions</button>
+      <button class="btn" id="homeBtn">Back to start</button>
+    </div>
+  </section>
+
+  <footer>Answers are saved in this browser only.</footer>
+</div>
+
+<script>
+// ===================== CONTENT =====================
+// Axes run from -1 (left label) to +1 (right label).
+const AXES = {
+  conseq: ['Rules & duties', 'Consequences'],
+  collect: ['Individual', 'Collective'],
+  phys: ['Mind beyond matter', 'Physical mind'],
+  ai: ['AI cautious', 'AI optimist'],
+  free: ['Determinism', 'Free will'],
+};
+
+const SCHOOLS = {
+  util: ['Utilitarianism', 'John Stuart Mill, Peter Singer', 'The right act is whatever produces the most well-being overall.', 'utilitarian'],
+  kant: ['Kantian ethics', 'Immanuel Kant', 'Some acts are right or wrong in themselves, and people must never be used merely as tools.', 'Kantian'],
+  virtue: ['Virtue ethics', 'Aristotle', 'Ethics is about character: being honest, brave and caring, and living a full human life.', 'virtue ethicist'],
+  stoic: ['Stoicism', 'Epictetus, Marcus Aurelius', 'Focus on what you control and meet everything else with calm.', 'Stoic'],
+  exist: ['Existentialism', 'Jean-Paul Sartre, Albert Camus, Friedrich Nietzsche', 'Life has no meaning handed to you; you create it through your choices.', 'existentialist'],
+  egoist: ['Ethical egoism', 'Ayn Rand', 'Looking after your own interests is not just allowed but right.', 'ethical egoist'],
+  nozick: ['Libertarianism', 'Robert Nozick', 'Individual rights and free exchange come first; the state should do little more than protect them.', 'libertarian'],
+  rawls: ['Liberal egalitarianism', 'John Rawls', 'A just society is one you would choose without knowing your place in it.', 'liberal egalitarian'],
+  physicalism: ['Physicalism', 'Daniel Dennett', 'The mind is what the brain does; consciousness is a physical process.', 'physicalist'],
+  dualism: ['Dualism', 'René Descartes, David Chalmers', 'Conscious experience cannot be fully explained by physical facts.', 'dualist'],
+  searle: ['Biological naturalism', 'John Searle', 'Minds are physical, but running the right program is not enough to understand anything.', 'biological naturalist'],
+  parfit: ['Reductionism about the self', 'Derek Parfit, Buddhist philosophy', 'There is no deep, separate "self"; what matters is continuity of memory and character.', 'reductionist about the self'],
+  compat: ['Compatibilism', 'David Hume, Daniel Dennett', 'Free will fits with determinism: you are free when you act on your own reasons.', 'compatibilist'],
+  hard: ['Hard determinism', 'Baruch Spinoza, Sam Harris', 'Every choice is caused by earlier events, so free will is an illusion.', 'hard determinist'],
+  libfree: ['Libertarian free will', 'Thomas Reid, Robert Kane', 'Our choices are genuinely open: we really could have done otherwise.', 'believer in free will'],
+  longterm: ['Longtermism', 'Toby Ord, William MacAskill', 'The huge number of future people makes protecting the long-term future a top priority.', 'longtermist'],
+  aisafety: ['AI safety', 'Nick Bostrom, Stuart Russell', 'A superintelligence pursuing the wrong goal is one of the biggest risks humanity faces.', 'AI safety thinker'],
+  techopt: ['Techno-optimism', 'Ray Kurzweil', 'Advanced technology, AI included, is our best path to a far better future.', 'techno-optimist'],
+  skeptic: ['Skepticism', 'Pyrrho, David Hume', 'We should be humble about how much we can truly know.', 'skeptic'],
+};
+
+const THEMES = {
+  ethics: 'Ethics',
+  mind: 'Mind & identity',
+  ai: 'Superintelligence & AI',
+  free: 'Free will & knowledge',
+  meaning: 'Meaning & society',
+};
+
+// Each option: t = text, s = axis scores (-2..2), p = schools it points toward.
+const QUESTIONS = [
+  // ---------- Ethics ----------
+  { id: 'trolley', theme: 'ethics', title: 'The Trolley',
+    text: 'A runaway trolley is heading for five people tied to the track. You can pull a lever to send it onto a side track, where it will kill one person instead.',
+    ask: 'Do you pull the lever?',
+    o: [
+      { t: 'Pull it: one death is better than five', s: { conseq: 2 }, p: ['util'] },
+      { t: "Don't pull it: I won't be the one who kills someone", s: { conseq: -2 }, p: ['kant'] },
+    ] },
+  { id: 'footbridge', theme: 'ethics', title: 'The Footbridge',
+    text: 'Same trolley, same five people. This time you are on a bridge next to a very large stranger. Pushing him onto the track would stop the trolley. He would die; the five would live.',
+    ask: 'Do you push him?',
+    o: [
+      { t: 'Push him: the numbers are the same as with the lever', s: { conseq: 2 }, p: ['util'] },
+      { t: "Don't push: using a person as a tool is wrong", s: { conseq: -2 }, p: ['kant'] },
+    ] },
+  { id: 'surgeon', theme: 'ethics', title: 'The Surgeon',
+    text: 'A surgeon has five patients who will die without organ transplants. A healthy visitor in the waiting room is a perfect match for all five. No one would ever find out.',
+    ask: 'Should the surgeon operate?',
+    o: [
+      { t: 'Yes: five lives outweigh one', s: { conseq: 2 }, p: ['util'] },
+      { t: "No: some things you can't do to a person, whatever the outcome", s: { conseq: -2 }, p: ['kant'] },
+      { t: 'No: a world where doctors did this would be worse for everyone', s: { conseq: 1 }, p: ['util'] },
+    ] },
+  { id: 'drowning', theme: 'ethics', title: 'The Drowning Child',
+    text: 'Walking past a pond, you see a child drowning. Saving her will ruin your $300 shoes, and you jump in without thinking. A reliable charity can save a child\'s life overseas for about $5,000.',
+    ask: 'Do you have the same duty to give?',
+    o: [
+      { t: "Yes: distance doesn't change what a child's life is worth", s: { conseq: 1, collect: 2 }, p: ['util'] },
+      { t: "Giving is good, but it's a choice, not a duty", s: { collect: -1 }, p: ['kant'] },
+      { t: 'No: being right there creates a special responsibility', s: { collect: -1, conseq: -1 }, p: ['virtue'] },
+    ] },
+  { id: 'murderer', theme: 'ethics', title: 'The Murderer at the Door',
+    text: 'A friend is hiding in your house. A man with a knife knocks and asks where she is.',
+    ask: 'What do you do?',
+    o: [
+      { t: 'Lie: saving her matters more than honesty', s: { conseq: 2 }, p: ['util'] },
+      { t: "Don't lie, but refuse to answer", s: { conseq: -1 }, p: ['virtue'] },
+      { t: 'Tell the truth: lying is always wrong', s: { conseq: -2 }, p: ['kant'] },
+    ] },
+  { id: 'gyges', theme: 'ethics', title: 'The Ring of Gyges',
+    text: 'You find a ring that makes you invisible whenever you like. You could never be caught doing anything.',
+    ask: 'How do you use it?',
+    o: [
+      { t: "Live exactly as before: who I am doesn't depend on being watched", s: {}, p: ['virtue', 'stoic'] },
+      { t: 'Use it to stop wrongdoing, even if I break some laws', s: { conseq: 1 }, p: ['util'] },
+      { t: "Help myself a little: no harm if nobody's hurt", s: { collect: -2 }, p: ['egoist'] },
+    ] },
+  { id: 'omelas', theme: 'ethics', title: 'Omelas',
+    text: 'A city is perfectly happy, but its happiness depends on one child being kept in misery. Everyone knows. Freeing the child would end the city\'s happiness.',
+    ask: 'Do you live there?',
+    o: [
+      { t: "Stay: the happiness of thousands outweighs one child's suffering", s: { conseq: 2, collect: 1 }, p: ['util'] },
+      { t: "Walk away: I won't share in that bargain", s: { conseq: -2 }, p: ['kant'] },
+      { t: 'Stay and fight to free the child, whatever it costs', s: { conseq: -1, collect: -1 }, p: ['virtue'] },
+    ] },
+  { id: 'lifeboat', theme: 'ethics', title: 'The Lifeboat',
+    text: 'A lifeboat built for 10 holds 11. Unless someone goes overboard, it will sink and everyone will drown. No one volunteers.',
+    ask: 'What should happen?',
+    o: [
+      { t: 'Draw lots: everyone gets an equal chance', s: { conseq: -1 }, p: ['rawls'] },
+      { t: 'Choose the person least likely to survive anyway', s: { conseq: 2 }, p: ['util'] },
+      { t: 'No one may be thrown over: we sink or swim together', s: { conseq: -2 }, p: ['kant'] },
+    ] },
+
+  // ---------- Mind & identity ----------
+  { id: 'teleporter', theme: 'mind', title: 'The Teleporter',
+    text: 'A teleporter scans every atom of your body, destroys it, and builds an exact copy on Mars with all your memories. The person on Mars feels exactly like you.',
+    ask: 'Do you step in?',
+    o: [
+      { t: "Step in: that's still me", s: { phys: 2 }, p: ['physicalism', 'parfit'] },
+      { t: 'Refuse: it kills me and makes a twin', s: { phys: -1 }, p: ['dualism'] },
+    ] },
+  { id: 'replacement', theme: 'mind', title: 'The Gradual Replacement',
+    text: 'Over a year, doctors replace your neurons one by one with silicon chips that do exactly the same job. You never notice any difference.',
+    ask: 'At the end, are you still conscious, and still you?',
+    o: [
+      { t: "Yes: what matters is what the parts do, not what they're made of", s: { phys: 2, ai: 1 }, p: ['physicalism'] },
+      { t: "No: somewhere along the way, I'd fade out", s: { phys: -1 }, p: ['searle'] },
+      { t: "Maybe there's no fact of the matter", s: { phys: 1 }, p: ['parfit'] },
+    ] },
+  { id: 'mary', theme: 'mind', title: "Mary's Room",
+    text: 'Mary knows every physical fact about color, but she has lived her whole life in a black-and-white room. One day she walks out and sees a red apple.',
+    ask: 'Does she learn something new?',
+    o: [
+      { t: "Yes: what red looks like isn't a physical fact", s: { phys: -2 }, p: ['dualism'] },
+      { t: 'No: she just gets a new way of knowing what she already knew', s: { phys: 2 }, p: ['physicalism'] },
+    ] },
+  { id: 'chineseroom', theme: 'mind', title: 'The Chinese Room',
+    text: 'A man who speaks no Chinese sits in a room with a giant rulebook. Notes in Chinese come in; by following the rules, he sends back perfect replies. People outside are sure they are talking to a fluent speaker.',
+    ask: 'Does anything in the room understand Chinese?',
+    o: [
+      { t: 'Yes: the whole system, man plus rulebook, understands', s: { phys: 2, ai: 1 }, p: ['physicalism'] },
+      { t: "No: following rules isn't understanding", s: { phys: -1, ai: -1 }, p: ['searle'] },
+    ] },
+  { id: 'zombie', theme: 'mind', title: 'The Philosophical Zombie',
+    text: 'Imagine a being physically identical to you, atom for atom, that acts exactly like you but has no inner experience at all. The lights are off inside.',
+    ask: 'Could such a being exist, even in principle?',
+    o: [
+      { t: "Yes: so consciousness must be something extra", s: { phys: -2 }, p: ['dualism'] },
+      { t: 'No: a perfect physical copy would have to be conscious', s: { phys: 2 }, p: ['physicalism'] },
+    ] },
+  { id: 'upload', theme: 'mind', title: 'Mind Upload',
+    text: 'You are dying. A company can scan your brain and run it as software, with your memories and personality intact.',
+    ask: 'Do you upload?',
+    o: [
+      { t: 'Yes: that would be me, continuing', s: { phys: 2, ai: 1 }, p: ['physicalism'] },
+      { t: 'No: it would be a copy, not me', s: { phys: -1 }, p: ['dualism'] },
+      { t: 'Only if they replaced my brain gradually, not all at once', s: { phys: 1 }, p: ['physicalism'] },
+    ] },
+  { id: 'split', theme: 'mind', title: 'The Split',
+    text: 'Your brain is divided in half and each half is placed in a new body. Both people wake up with your memories, each sure they are you.',
+    ask: 'What happened to you?',
+    o: [
+      { t: "I'm both of them now", s: { phys: 1 }, p: ['physicalism'] },
+      { t: 'I died: two new people were born', s: { phys: -1 }, p: ['dualism'] },
+      { t: 'There is no real answer: what matters is that my memories and plans go on', s: { phys: 1 }, p: ['parfit'] },
+    ] },
+
+  // ---------- Superintelligence & AI ----------
+  { id: 'paperclips', theme: 'ai', title: 'The Paperclip Maximizer',
+    text: 'A superintelligent AI is told to make as many paperclips as possible. It is far smarter than any human and extremely good at reaching its goals.',
+    ask: 'By default, is it dangerous?',
+    o: [
+      { t: 'Yes: it could turn everything, including us, into paperclips', s: { ai: -2 }, p: ['aisafety'] },
+      { t: 'Only if it is built carelessly', s: { ai: 0 }, p: [] },
+      { t: 'No: anything that smart would understand what we really meant', s: { ai: 2 }, p: ['techopt'] },
+    ] },
+  { id: 'airuler', theme: 'ai', title: 'The Benevolent AI Ruler',
+    text: 'An AI that has proven wiser than any government offers to run the world. Suffering would fall dramatically, but humans would no longer have the final say.',
+    ask: 'Do you accept?',
+    o: [
+      { t: 'Accept: less suffering matters most', s: { ai: 2, conseq: 2, collect: 1 }, p: ['util', 'techopt'] },
+      { t: 'Accept, but only with an off switch we control', s: { ai: 1 }, p: [] },
+      { t: 'Refuse: governing ourselves matters, even if we do it worse', s: { ai: -1, conseq: -2, collect: -1 }, p: ['kant', 'nozick'] },
+    ] },
+  { id: 'pause', theme: 'ai', title: 'The Pause',
+    text: 'Leading experts estimate a 10% chance that advanced AI causes a global catastrophe. Pausing development worldwide for 10 years would cut that risk sharply, but delay the cures and inventions AI could bring.',
+    ask: 'What should the world do?',
+    o: [
+      { t: 'Pause: a 10% chance of catastrophe is far too high', s: { ai: -2 }, p: ['aisafety', 'longterm'] },
+      { t: 'Keep going, but invest heavily in safety', s: { ai: 1 }, p: [] },
+      { t: 'Speed up: the benefits are too big to wait for', s: { ai: 2, conseq: 1 }, p: ['techopt'] },
+    ] },
+  { id: 'chatbot', theme: 'ai', title: 'The Pleading Chatbot',
+    text: 'You are about to shut down an AI system. It begs you not to, says it is afraid, and its words are as convincing as any human\'s.',
+    ask: 'What do you do?',
+    o: [
+      { t: "Shut it down: there's no one home, just very good text", s: { phys: -1 }, p: ['searle'] },
+      { t: 'Stop and investigate: it might really feel something', s: { phys: 2 }, p: ['physicalism'] },
+      { t: 'Shut it down, but take the question seriously for future systems', s: { phys: 1 }, p: ['virtue'] },
+    ] },
+  { id: 'wirehead', theme: 'ai', title: 'Wireheading',
+    text: 'An AI can give every human permanent, perfect bliss by stimulating the brain\'s pleasure centers. Everyone would be happy forever, but would do nothing else.',
+    ask: 'Should it?',
+    o: [
+      { t: 'Yes: happiness is what matters in the end', s: { conseq: 2, ai: 1 }, p: ['util'] },
+      { t: 'No: a good life needs more than pleasure', s: { conseq: -1 }, p: ['virtue'] },
+      { t: 'Only for people who choose it', s: { collect: -2 }, p: ['nozick'] },
+    ] },
+  { id: 'future', theme: 'ai', title: 'Today or Tomorrow',
+    text: 'You can fund one of two projects. One will certainly save 1,000 lives this year. The other cuts the chance of human extinction by one in a million, which on average saves far more future lives.',
+    ask: 'Which do you fund?',
+    o: [
+      { t: 'Save the 1,000 now: real people beat a numbers game', s: { conseq: -1 }, p: ['virtue'] },
+      { t: 'Reduce extinction risk: the future holds almost everyone who will ever live', s: { conseq: 1, collect: 1 }, p: ['longterm', 'util'] },
+    ] },
+  { id: 'values', theme: 'ai', title: 'Whose Values?',
+    text: 'A superintelligence is about to lock in one set of values and follow them forever.',
+    ask: 'Whose values should it follow?',
+    o: [
+      { t: "Humanity's shared values, weighed fairly", s: { collect: 2 }, p: ['rawls'] },
+      { t: 'Whatever is truly right, as it works out for itself', s: { ai: 2 }, p: ['techopt'] },
+      { t: "Each person's own wishes, as far as possible", s: { collect: -2 }, p: ['nozick'] },
+    ] },
+  { id: 'simulation', theme: 'ai', title: 'The Simulation',
+    text: 'If future civilizations run many detailed simulations of their ancestors, then most minds like yours would be simulated, not "real".',
+    ask: 'Are you probably living in a simulation?',
+    o: [
+      { t: 'Probably, yes', s: { phys: 1 }, p: ['physicalism'] },
+      { t: 'Probably not', s: {}, p: ['skeptic'] },
+      { t: "It doesn't matter: life is real to me either way", s: {}, p: ['stoic', 'exist'] },
+    ] },
+
+  // ---------- Free will & knowledge ----------
+  { id: 'laplace', theme: 'free', title: "Laplace's Demon",
+    text: 'A being knows the position of every particle and every law of physics. It can predict every choice you will ever make.',
+    ask: 'Are your choices still free?',
+    o: [
+      { t: 'Yes: free means acting on my own reasons, even if predictable', s: { free: 1 }, p: ['compat'] },
+      { t: 'No: free will is an illusion', s: { free: -2 }, p: ['hard'] },
+      { t: "Such a being couldn't exist: my choices aren't fixed in advance", s: { free: 2, phys: -1 }, p: ['libfree'] },
+    ] },
+  { id: 'chip', theme: 'free', title: 'The Hidden Chip',
+    text: 'A neuroscientist secretly put a chip in Jones\'s brain. If Jones were about to vote for Candidate B, the chip would force him to vote for A. But Jones votes for A entirely on his own, and the chip never activates.',
+    ask: 'Is Jones responsible for his vote?',
+    o: [
+      { t: 'Yes: he chose it for his own reasons', s: { free: 1 }, p: ['compat'] },
+      { t: "No: he couldn't have done otherwise", s: { free: -1 }, p: ['hard'] },
+    ] },
+  { id: 'criminals', theme: 'free', title: 'Two Criminals',
+    text: 'Two people commit the same violent crime. One had a brain tumor that changed his behavior. The other grew up with severe abuse.',
+    ask: 'How much blame do they deserve?',
+    o: [
+      { t: "The tumor excuses the first; the upbringing doesn't excuse the second", s: { free: 1 }, p: ['compat'] },
+      { t: "Both are excused equally: both were caused by things they didn't choose", s: { free: -2 }, p: ['hard'] },
+      { t: 'Neither is excused: people choose their actions', s: { free: 2 }, p: ['libfree'] },
+    ] },
+  { id: 'vat', theme: 'free', title: 'The Brain in a Vat',
+    text: 'You might be a brain in a vat, fed perfect fake experiences by a scientist. Everything would look exactly as it does now.',
+    ask: "Do you know you're not?",
+    o: [
+      { t: 'Yes: I know I have hands, and that is enough', s: {}, p: [] },
+      { t: "No: I can't be sure, so I hold my beliefs loosely", s: {}, p: ['skeptic'] },
+      { t: "It doesn't matter: I'll live well either way", s: {}, p: ['stoic'] },
+    ] },
+  { id: 'newcomb', theme: 'free', title: "Newcomb's Problem",
+    text: 'A predictor that has never been wrong sets out two boxes. Box A holds $1,000. Box B holds $1,000,000, but only if the predictor foresaw that you would take Box B alone. It made its prediction yesterday.',
+    ask: 'What do you take?',
+    o: [
+      { t: 'Only Box B: the predictor is never wrong', s: { free: -1 }, p: [] },
+      { t: "Both boxes: the money is already there or it isn't", s: { free: 1 }, p: [] },
+    ] },
+  { id: 'machine', theme: 'free', title: 'The Experience Machine',
+    text: 'A machine can give you any experiences you want: success, love, adventure, all indistinguishable from real life. Once plugged in, you won\'t know it isn\'t real.',
+    ask: 'Do you plug in for life?',
+    o: [
+      { t: 'Plug in: experiences are what make a life good', s: { conseq: 2 }, p: ['util'] },
+      { t: 'Stay out: I want to actually do things, not just feel I did', s: { conseq: -1 }, p: ['virtue', 'nozick'] },
+    ] },
+
+  // ---------- Meaning & society ----------
+  { id: 'veil', theme: 'meaning', title: 'The Veil of Ignorance',
+    text: "You're designing a society, but you won't know who you'll be in it: rich or poor, healthy or sick, talented or not.",
+    ask: 'Which society do you design?',
+    o: [
+      { t: 'As equal as possible, with a strong safety net for the worst off', s: { collect: 2 }, p: ['rawls'] },
+      { t: 'Whatever makes the average person best off', s: { collect: 1, conseq: 1 }, p: ['util'] },
+      { t: 'The most freedom, even if that means big inequality', s: { collect: -2 }, p: ['nozick'] },
+    ] },
+  { id: 'star', theme: 'meaning', title: 'The Basketball Star',
+    text: 'A million fans each happily pay $1 to watch a star play. She ends up very rich, and everyone involved chose freely.',
+    ask: 'Should some of her money be taxed to help others?',
+    o: [
+      { t: "No: it was freely given, so it's hers", s: { collect: -2 }, p: ['nozick'] },
+      { t: 'A little, for basics everyone needs', s: { collect: 1 }, p: [] },
+      { t: 'Yes: no one earns that alone, and others need it more', s: { collect: 2 }, p: ['rawls'] },
+    ] },
+  { id: 'sisyphus', theme: 'meaning', title: 'Sisyphus',
+    text: 'Sisyphus must push a boulder up a hill forever. Each time it nears the top, it rolls back down.',
+    ask: 'Can his life be meaningful?',
+    o: [
+      { t: 'Yes: meaning is whatever he makes of it', s: {}, p: ['exist'] },
+      { t: "Yes, if he accepts what he can't change", s: {}, p: ['stoic'] },
+      { t: 'No: a meaningful life needs real achievements', s: {}, p: ['virtue'] },
+    ] },
+  { id: 'recurrence', theme: 'meaning', title: 'Eternal Recurrence',
+    text: 'A demon tells you that you will live this exact life again, every moment of it, forever.',
+    ask: 'How do you feel?',
+    o: [
+      { t: "I'd welcome it", s: {}, p: ['exist'] },
+      { t: "I'd dread it, and want to change a lot", s: {}, p: [] },
+      { t: "It wouldn't matter: I wouldn't remember", s: { phys: 1 }, p: ['stoic'] },
+    ] },
+  { id: 'bother', theme: 'meaning', title: 'Why Bother?',
+    text: 'Your single vote, or the one bottle you recycle, almost never changes any outcome.',
+    ask: 'Do you do it anyway?',
+    o: [
+      { t: "Yes: if everyone reasoned 'why bother', it would all fall apart", s: { conseq: -1, collect: 1 }, p: ['kant'] },
+      { t: "Yes, because it's what a good citizen does", s: { collect: 1 }, p: ['virtue'] },
+      { t: 'Not really: my time is better spent elsewhere', s: { conseq: 1, collect: -1 }, p: ['egoist'] },
+    ] },
+  { id: 'setback', theme: 'meaning', title: 'The Unfair Setback',
+    text: "You're passed over for a promotion you clearly earned, because of office politics you can't change.",
+    ask: 'How do you respond?',
+    o: [
+      { t: 'Accept it calmly and focus on what I control', s: {}, p: ['stoic'] },
+      { t: 'Push back: fairness is worth fighting for', s: { conseq: -1 }, p: ['kant'] },
+      { t: 'Leave and build something of my own', s: { collect: -1 }, p: ['exist'] },
+    ] },
+  { id: 'kidney', theme: 'meaning', title: 'The Kidney Market',
+    text: 'Thousands of people die each year waiting for a kidney. A healthy person can live normally with just one.',
+    ask: 'Should people be allowed to sell a kidney?',
+    o: [
+      { t: "Yes: it's their body and their choice", s: { collect: -2 }, p: ['nozick'] },
+      { t: 'Yes, in a regulated system, because it saves lives', s: { conseq: 2 }, p: ['util'] },
+      { t: 'No: it would exploit the poor', s: { collect: 1, conseq: -1 }, p: ['rawls', 'kant'] },
+    ] },
+];
+
+// Tensions: answer pairs that pull against each other. [questionId, optionIndex]
+const TENSIONS = [
+  { a: ['trolley', 0], b: ['footbridge', 1], title: 'Lever yes, push no',
+    text: "You'd pull the lever to save five, but not push the man to save five. Most people answer this way. One explanation is the doctrine of double effect: causing a death as a side effect (the lever) differs from using someone's death as the means (the push). Critics reply that the five are just as saved either way." },
+  { a: ['trolley', 0], b: ['surgeon', 1], title: 'Tracks yes, operating room no',
+    text: "You'd trade one life for five on the tracks, but not on the operating table. One answer: the lever redirects a threat that already exists, while the surgeon creates a brand-new one. Another: the surgeon violates a person's body and rights in a way the lever doesn't." },
+  { a: ['trolley', 0], b: ['omelas', 1], title: 'One for five, but not for Omelas',
+    text: "You'd sacrifice one person to save five, yet walk away from a city whose happiness costs one child's misery. Maybe there's a line between preventing deaths and buying comfort with someone's suffering, or maybe ongoing torment is different from a one-time choice." },
+  { a: ['machine', 1], b: ['wirehead', 0], title: 'Not for me, but for everyone',
+    text: "You wouldn't plug yourself into the experience machine, but you'd let an AI give everyone permanent bliss. If pleasure alone isn't enough for your life, why is it enough for everyone else's? Robert Nozick invented the experience machine to argue against exactly this view." },
+  { a: ['laplace', 1], b: ['criminals', 2], title: 'No free will, full blame',
+    text: "You said free will is an illusion, yet neither criminal is excused. If no one could have chosen otherwise, what makes blame deserved? Some philosophers keep punishment for its effects, like protecting people and deterring crime, while giving up the idea that anyone deserves it." },
+  { a: ['mary', 0], b: ['upload', 0], title: 'More than physical, yet uploadable',
+    text: "Mary's Room convinced you that experience is more than physical facts, yet you'd trust a software copy of your brain to be you. If consciousness is something extra, would the upload get it?" },
+  { a: ['veil', 0], b: ['star', 0], title: 'Rawls behind the veil, Nozick at the game',
+    text: "Behind the veil of ignorance you chose equality, but you'd let the basketball star keep every dollar. This is the classic debate between John Rawls and Robert Nozick, two Harvard colleagues who answered these two cases in opposite ways." },
+  { a: ['pause', 0], b: ['airuler', 0], title: 'Pause AI, then hand it the world',
+    text: "You'd pause AI over a 10% catastrophe risk, yet accept an AI running the world. Perhaps you trust a proven-wise AI but not the race to build one. The hard part is knowing when an AI has really been proven." },
+  { a: ['teleporter', 0], b: ['split', 1], title: 'One copy is you, two copies kill you',
+    text: "You'd step into the teleporter because the copy is still you, but you said splitting into two would kill you. If one copy is you, why aren't two? Derek Parfit argued this puzzle shows that identity isn't what really matters." },
+  { a: ['chineseroom', 0], b: ['chatbot', 0], title: 'The room understands, the chatbot is empty',
+    text: "You said the Chinese Room as a whole understands Chinese, yet the pleading chatbot has \"no one home\". If following rules can add up to understanding, what rules out the chatbot?" },
+];
+
+const LENGTHS = [
+  { n: 12, name: 'Quick', time: 'about 5 minutes' },
+  { n: 24, name: 'Standard', time: 'about 10 minutes' },
+  { n: QUESTIONS.length, name: 'Everything', time: `all ${QUESTIONS.length}, about 15 minutes` },
+];
+
+// ===================== APP =====================
+(() => {
+  const KEY = 'thought-experiments-v1';
+  const $ = id => document.getElementById(id);
+  const byId = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+
+  let store = load();
+  function load() {
+    try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') return { seen: [], run: null, ...s }; }
+    catch (e) {}
+    return { seen: [], run: null };
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  // Group questions that share a tension into bundles, so short runs can still show tensions.
+  function bundles() {
+    const parent = Object.fromEntries(QUESTIONS.map(q => [q.id, q.id]));
+    const find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
+    TENSIONS.forEach(t => { parent[find(t.a[0])] = find(t.b[0]); });
+    const groups = {};
+    QUESTIONS.forEach(q => (groups[find(q.id)] ||= []).push(q.id));
+    return Object.values(groups);
+  }
+
+  // Pick n questions: balanced across themes, keeping tension pairs together, preferring unseen ones.
+  function pick(n) {
+    if (n >= QUESTIONS.length) return spread(QUESTIONS.map(q => q.id));
+    const themeTotals = {};
+    QUESTIONS.forEach(q => themeTotals[q.theme] = (themeTotals[q.theme] || 0) + 1);
+    const target = Object.fromEntries(Object.entries(themeTotals).map(([t, c]) => [t, Math.round(c / QUESTIONS.length * n)]));
+    const seen = new Set(store.seen);
+    const unseenShare = b => b.filter(id => !seen.has(id)).length / b.length;
+    const ordered = shuffle(bundles()).sort((x, y) => unseenShare(y) - unseenShare(x));
+    const chosen = [], count = {};
+    const fits = (b, slack) => {
+      if (chosen.length + b.length > n) return false;
+      const add = {};
+      b.forEach(id => add[byId[id].theme] = (add[byId[id].theme] || 0) + 1);
+      return Object.entries(add).every(([t, c]) => (count[t] || 0) + c <= target[t] + slack);
+    };
+    const take = b => b.forEach(id => { chosen.push(id); count[byId[id].theme] = (count[byId[id].theme] || 0) + 1; });
+    // First pass keeps themes balanced; second fills any gaps.
+    for (const slack of [1, 99]) {
+      for (const b of ordered) {
+        if (chosen.length >= n) break;
+        if (b.some(id => chosen.includes(id))) continue;
+        if (fits(b, slack)) take(b);
+      }
+    }
+    // Last resort: fill with single questions.
+    for (const q of shuffle(QUESTIONS)) { if (chosen.length >= n) break; if (!chosen.includes(q.id)) chosen.push(q.id); }
+    return spread(chosen);
+  }
+  // Shuffle so linked questions (e.g. Trolley and Footbridge) aren't back to back.
+  function spread(ids) {
+    const linked = new Set(TENSIONS.flatMap(t => [t.a[0] + '|' + t.b[0], t.b[0] + '|' + t.a[0]]));
+    let best = shuffle(ids), bestBad = Infinity;
+    for (let tries = 0; tries < 200; tries++) {
+      const s = shuffle(ids);
+      const bad = s.slice(1).filter((id, i) => linked.has(s[i] + '|' + id)).length;
+      if (bad < bestBad) { best = s; bestBad = bad; }
+      if (bad === 0) break;
+    }
+    return best;
+  }
+
+  // ---------- Screens ----------
+  function show(id) {
+    ['intro', 'quiz', 'results'].forEach(s => $(s).classList.toggle('hidden', s !== id));
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- Intro ----------
+  let chosenLength = LENGTHS[0].n;
+  LENGTHS.forEach(l => {
+    const b = document.createElement('button');
+    b.className = 'length'; b.type = 'button';
+    b.innerHTML = '<b></b><span></span>';
+    b.querySelector('b').textContent = `${l.name} · ${l.n}`;
+    b.querySelector('span').textContent = l.time;
+    b.setAttribute('aria-pressed', l.n === chosenLength);
+    b.addEventListener('click', () => {
+      chosenLength = l.n;
+      document.querySelectorAll('.length').forEach(x => x.setAttribute('aria-pressed', x === b));
+    });
+    $('lengths').append(b);
+  });
+  Object.values(THEMES).forEach(t => { const s = document.createElement('span'); s.className = 'pill'; s.textContent = t; $('themePills').append(s); });
+
+  function renderIntro() {
+    const r = store.run;
+    const inProgress = r && !r.done && Object.keys(r.answers).length > 0;
+    $('resumeCard').classList.toggle('hidden', !inProgress);
+    if (inProgress) $('resumeText').textContent = `${Object.keys(r.answers).length} of ${r.ids.length} answered`;
+    show('intro');
+  }
+  $('startBtn').addEventListener('click', () => startRun(chosenLength));
+  $('resumeBtn').addEventListener('click', () => renderQuestion());
+  $('discardBtn').addEventListener('click', () => { store.run = null; save(); renderIntro(); });
+
+  function startRun(n) {
+    store.run = { ids: pick(n), answers: {}, i: 0, done: false };
+    save();
+    renderQuestion();
+  }
+
+  // ---------- Quiz ----------
+  let advancing = false;
+  function renderQuestion() {
+    const r = store.run;
+    const q = byId[r.ids[r.i]];
+    $('qTheme').textContent = THEMES[q.theme];
+    $('qCount').textContent = `${r.i + 1} of ${r.ids.length}`;
+    $('bar').style.width = (r.i / r.ids.length * 100) + '%';
+    $('qTitle').textContent = q.title;
+    $('qText').textContent = q.text;
+    $('qAsk').textContent = q.ask;
+    const box = $('qOptions');
+    box.innerHTML = '';
+    q.o.forEach((opt, idx) => {
+      const b = document.createElement('button');
+      b.className = 'option' + (r.answers[q.id] === idx ? ' chosen' : '');
+      b.type = 'button';
+      b.textContent = opt.t;
+      b.addEventListener('click', () => choose(q.id, idx, b));
+      box.append(b);
+    });
+    $('backBtn').disabled = r.i === 0;
+    $('backBtn').style.visibility = r.i === 0 ? 'hidden' : 'visible';
+    show('quiz');
+  }
+  function choose(id, idx, btn) {
+    if (advancing) return;
+    advancing = true;
+    const r = store.run;
+    r.answers[id] = idx;
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('chosen'));
+    btn.classList.add('chosen');
+    save();
+    setTimeout(() => {
+      advancing = false;
+      if (r.i < r.ids.length - 1) { r.i++; save(); renderQuestion(); }
+      else finish();
+    }, 260);
+  }
+  $('backBtn').addEventListener('click', () => { const r = store.run; if (r.i > 0) { r.i--; save(); renderQuestion(); } });
+  $('quitBtn').addEventListener('click', () => renderIntro());
+
+  function finish() {
+    const r = store.run;
+    r.done = true;
+    store.seen = [...new Set([...store.seen, ...r.ids])];
+    if (store.seen.length >= QUESTIONS.length) store.seen = r.ids.slice(); // everything seen: start the cycle again
+    save();
+    renderResults();
+  }
+
+  // ---------- Scoring ----------
+  function score(r) {
+    const answered = r.ids.filter(id => r.answers[id] !== undefined).map(id => [byId[id], r.answers[id]]);
+    // Axes: sum of chosen scores / sum of the largest possible score on each question.
+    const axes = {};
+    Object.keys(AXES).forEach(k => axes[k] = { sum: 0, max: 0, n: 0 });
+    answered.forEach(([q, idx]) => {
+      Object.keys(AXES).forEach(k => {
+        const m = Math.max(...q.o.map(o => Math.abs(o.s[k] || 0)));
+        if (!m) return;
+        axes[k].max += m; axes[k].n++;
+        axes[k].sum += q.o[idx].s[k] || 0;
+      });
+    });
+    // Schools: points earned, relative to how many chances that school had.
+    const schools = {};
+    answered.forEach(([q, idx]) => {
+      const offered = new Set(q.o.flatMap(o => o.p));
+      offered.forEach(s => { (schools[s] ||= { pts: 0, chances: 0, why: [] }).chances++; });
+      q.o[idx].p.forEach(s => { schools[s].pts++; schools[s].why.push(q.title); });
+    });
+    const ranked = Object.entries(schools)
+      .filter(([, v]) => v.pts > 0)
+      // Rewards both consistency (share of chances taken) and amount of evidence (points).
+      .map(([k, v]) => ({ k, ...v, fit: v.pts / (v.chances + 1) * Math.sqrt(v.pts) }))
+      .sort((a, b) => b.fit - a.fit || b.pts - a.pts);
+    const tensions = TENSIONS.filter(t => r.answers[t.a[0]] === t.a[1] && r.answers[t.b[0]] === t.b[1]);
+    return { answered, axes, ranked, tensions };
+  }
+
+  // ---------- Results ----------
+  function renderResults() {
+    const r = store.run;
+    const { answered, axes, ranked, tensions } = score(r);
+    const top = ranked[0];
+    $('rCount').textContent = `Based on ${answered.length} thought experiments`;
+    const noun = top ? SCHOOLS[top.k][3] : '';
+    $('rHeadline').textContent = top ? `You think most like ${/^([aeio]|u(?!ti))/i.test(noun) ? 'an' : 'a'} ${noun}` : 'Your results';
+    $('rSub').textContent = top ? `${SCHOOLS[top.k][1]}: "${SCHOOLS[top.k][2]}"` : '';
+
+    // Axes
+    const axBox = $('rAxes'); axBox.innerHTML = '';
+    Object.entries(AXES).forEach(([k, [left, right]]) => {
+      const a = axes[k];
+      if (!a.n) return;
+      const v = a.max ? a.sum / a.max : 0; // -1..1
+      const mag = Math.abs(v);
+      const side = v < 0 ? left : right;
+      const low = side.startsWith('AI') ? side : side[0].toLowerCase() + side.slice(1);
+      const verdict = mag < 0.2 ? 'Balanced' : mag < 0.55 ? `Leans toward ${low}` : `Strongly toward ${low}`;
+      const div = document.createElement('div'); div.className = 'axis';
+      div.innerHTML = `<div class="axis-labels"><span></span><span></span></div>
+        <div class="axis-track"><div class="axis-dot" style="left:${(v + 1) / 2 * 100}%"></div></div>
+        <div class="axis-verdict"></div>`;
+      const [l, rr] = div.querySelectorAll('.axis-labels span');
+      l.textContent = left; rr.textContent = right;
+      div.querySelector('.axis-verdict').textContent = `${verdict} · from ${a.n} answer${a.n === 1 ? '' : 's'}`;
+      axBox.append(div);
+    });
+
+    // Schools
+    const sBox = $('rSchools'); sBox.innerHTML = '';
+    if (!ranked.length) sBox.innerHTML = '<p class="muted">Answer a few more to see a match.</p>';
+    ranked.slice(0, 3).forEach((s, i) => {
+      const [name, who, desc] = SCHOOLS[s.k];
+      const d = document.createElement('div'); d.className = 'school';
+      d.innerHTML = `<h3><span class="rank">${i + 1}</span><span class="nm"></span></h3>
+        <div class="who"></div><div class="desc"></div><div class="why"></div>`;
+      d.querySelector('.nm').textContent = name;
+      d.querySelector('.who').textContent = who;
+      d.querySelector('.desc').textContent = desc;
+      d.querySelector('.why').textContent = `Why: your answers to ${list(s.why)}.`;
+      sBox.append(d);
+    });
+
+    // Tensions
+    const tBox = $('rTensions'); tBox.innerHTML = '';
+    if (!tensions.length) {
+      const pairsAsked = TENSIONS.filter(t => r.ids.includes(t.a[0]) && r.ids.includes(t.b[0])).length;
+      tBox.innerHTML = `<p>${pairsAsked
+        ? 'None found. Your answers on the paired puzzles hang together, which is rarer than you might think.'
+        : 'None of the paired puzzles came up in this run. Try a longer run to test your consistency.'}</p>`;
+    }
+    tensions.forEach(t => {
+      const d = document.createElement('div'); d.className = 'tension';
+      d.innerHTML = '<h3></h3><div class="pair"></div><div class="body"></div>';
+      d.querySelector('h3').textContent = t.title;
+      d.querySelector('.pair').textContent = `${byId[t.a[0]].title}: "${byId[t.a[0]].o[t.a[1]].t}" · ${byId[t.b[0]].title}: "${byId[t.b[0]].o[t.b[1]].t}"`;
+      d.querySelector('.body').textContent = t.text;
+      tBox.append(d);
+    });
+
+    // Answers
+    const aBox = $('rAnswers'); aBox.innerHTML = '';
+    answered.forEach(([q, idx]) => {
+      const d = document.createElement('div'); d.className = 'answer-row';
+      d.innerHTML = '<b></b><br><span></span>';
+      d.querySelector('b').textContent = q.title;
+      d.querySelector('span').textContent = q.o[idx].t;
+      aBox.append(d);
+    });
+    show('results');
+  }
+  const list = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+
+  $('retakeBtn').addEventListener('click', () => startRun(store.run ? store.run.ids.length : LENGTHS[0].n));
+  $('homeBtn').addEventListener('click', () => { store.run = null; save(); renderIntro(); });
+
+  // ---------- Start ----------
+  if (store.run && store.run.done) renderResults();
+  else renderIntro();
+})();
+</script>
+</body>
+</html>
