@@ -132,4 +132,22 @@ I think it's good how it is. The check marks are good confirmation for if someth
 
 ## Output 4:
 
-TBD (pasted in with the next prompt)
+The habit tracker is now a `keeper` and has a card on the home page, and it's pushed to `main`. Give the site a minute, then hard refresh with **Ctrl + Shift + R**. I tested the home page in a headless browser: it shows "4 projects", and clicking the Habit Tracker card opens the app.
+
+**Home page:** the new card has a thumbnail at `_thumbs/habit-tracker.png`, showing a sample day at 86%.
+
+**`habit_tracker/prompts.md` header:**
+- **Status:** `keeper`
+- **Dates:** includes your 22 minutes, noted as timed by you.
+- **Use:** "tried on the live GitHub Pages site 2026-11-02"
+- **Takeaway:** "(draft)" removed.
+- **Prompt 2:** Verified raised to `human-tested`, with a note in Human edits.
+
+**I filled in three fields with my own judgment.** You asked me to do that last time; change any you disagree with:
+- **Reusability:** `artifact high · prompt pattern medium`. You'll likely keep using the app. Asking questions first, then building, worked well on both apps.
+- **Story value:** `anecdote`.
+- **Surprises:** that the ✔ marks were enough confirmation without a save button, and that asking what removing a habit does to past days settled the trickiest design question before any code was written.
+
+**Record kept up to date:** I pasted Output 3 and recorded this message as Prompt 4. Output 4 will be added with your next message. As before, the model name only needs filling in on line 5.
+
+That's two of the three apps. Send idea #3 whenever you're ready.
