@@ -1,0 +1,73 @@
+# Project: Habit Tracker
+
+> - **Files:** habit-tracker.html
+> - **Dates:** 2026-11-02 → 2026-11-02
+> - **Defaults:** Claude Code · model TBD · medium effort
+> - **Status:** prototype
+> - **Use:** none yet
+> - **Reusability:** artifact TBD · prompt pattern TBD
+> - **Tags:** single-file-html, productivity, localStorage, export-import
+> - **Takeaway (draft):** Settling storage, number-habit goals and what happens to past days before any code meant the whole app came out of one build prompt.
+> - **Story value:** TBD
+> - **Surprises:** TBD
+
+# Prompt 1 (app idea and clarifying questions):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** not-run
+> - **Human edits:** none
+
+The second idea I have for an app is a daily habit tracker app. This app should do the following:
+
+* List a bunch of habits, here are some
+   * Meditation
+   * Prayer
+   * Exercise
+   * Eat healthy
+   * Neck stretches
+   * Caffeine (mg)
+   * Hours of sleep
+
+
+The app should then track your responses each day (not sure if it'd require a login then?) And you should be able to view your history for each day. Each day should have a % for how many habits you did successfully. You should ideally be able to add more habits to the list I made, or remove habits if you don't want to track them anymore. Each day should have the most updated list of habits.
+
+Let me know if you have any questions
+
+## Output 1:
+
+Good idea. I have four questions before building.
+
+**1. Does it need to work across devices?** It doesn't need a login. Your site on GitHub Pages can't run a server, so the simplest option is to save your answers in your browser, on that device only. That's private, needs no account, and works offline. The trade-off is that your phone and laptop would keep separate histories, and clearing your browser data erases it. Pick one:
+- **(a) Browser only, with backup (recommended).** Add **Export** and **Import** buttons that save your history to a file and load it back. That also covers moving it to another device by hand.
+- **(b) Automatic sync between devices.** This needs a login and an online database. It's much more work, and it no longer fits "one small file."
+
+**2. What counts as a success for the number habits?** I'll let you set a goal for each number habit and change it later. Are these starting goals right?
+- **Caffeine:** 200 mg or less
+- **Hours of sleep:** 7 or more
+
+The yes/no habits, like Meditation and Exercise, count as a success when checked.
+
+**3. What should removing a habit do to past days?** I plan to keep history as it was. If you remove "Neck stretches" today, past days still show it, and their percentages don't change. Today and every day after use your current list. Does that match what you meant by "each day should have the most updated list of habits"?
+
+**4. What should the folder be called?** I suggest folder `habit_tracker/` with app file `habit-tracker.html`.
+
+I'll also add a way to fill in or fix earlier days, in case you forget to log one.
+
+**For the record:** as with the movie picker, I'll create the folder once the name is settled. Your message above becomes Prompt 1, and this reply becomes Output 1. The model name will only go in the Defaults line, so it's a one-line edit for you at the end.
+
+# Prompt 2 (answers and first build):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+1. Browser only works for now to keep it simple
+2. Yes exactly. 200 mg or less for caffeine, 8 hrs or more for sleep
+3. Removing a habit should not impact past days. Yes, today and every day after use your current list
+4. habit_tracker is good.
+
+## Output 2:
+
+TBD (pasted in with the next prompt)
