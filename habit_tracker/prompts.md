@@ -9,7 +9,7 @@
 > - **Tags:** single-file-html, productivity, localStorage, export-import
 > - **Takeaway:** Settling storage, number-habit goals and what happens to past days before any code meant the whole app came out of one build prompt.
 > - **Story value:** anecdote
-> - **Surprises:** With no save button I wasn't sure anything was saved, but the ✔ marks that appear as each habit is done turned out to be enough confirmation. Asking up front what removing a habit should do to past days caught a design question I hadn't thought about.
+> - **Surprises:** With no save button I wasn't sure anything was saved, but the ✔ marks that appear as each habit is done turned out to be enough confirmation. Asking up front what removing a habit should do to past days settled the trickiest design question before any code was written.
 
 # Prompt 1 (app idea and clarifying questions):
 
