@@ -70,4 +70,43 @@ I'll also add a way to fill in or fix earlier days, in case you forget to log on
 
 ## Output 2:
 
+The habit tracker is built and pushed to `main`. Once the site updates, it'll be at **https://matt-baxter.github.io/vibe-coding/habit_tracker/habit-tracker.html** (hard refresh with Ctrl + Shift + R if you see an old copy). I tested it in a headless browser, including setting the clock forward a day to check past days, with no errors. Phone layout tested at phone size.
+
+It's one file, `habit_tracker/habit-tracker.html`, with three tabs:
+
+**Today**
+- Your seven habits. The yes/no ones have checkboxes; Caffeine and Hours of sleep have number boxes with their goal shown underneath (at most 200 mg, at least 8 hrs).
+- A ✔ appears next to each habit as soon as it's done or its goal is met.
+- A ring shows the day's percentage, such as "3 of 7 habits done, 43%".
+- The ◀ ▶ arrows and the date picker let you go back and fill in or fix a past day. Future days are blocked.
+
+**History**
+- Every day you've logged, newest first, with its percentage, a bar, and one dot per habit (filled in when done). Click a day to open it.
+- Summary tiles: days logged, average day, last 7 days, perfect days, and your current streak.
+
+**Habits**
+- Add a habit, either yes/no or a number with a unit and an "at least" or "at most" goal.
+- Remove habits, reorder them with ↑ ↓, and change number goals.
+- **Export backup** downloads your history as a file, and **Import backup** loads one back in. Use these for safekeeping or to move to another device.
+
+**How past days work:** the first time you log a day, it saves a copy of your habit list and goals at that moment. Changes you make later apply to today and every day after, but never rewrite a past day. In my test, I logged 7.5 hours of sleep on Nov 1, then removed "Neck stretches" and lowered the sleep goal to 7 on Nov 2. Nov 1 still showed "Neck stretches", still counted 7.5 hours as a miss, and kept its 43%. If you go back to a day you never logged, it starts from your current list.
+
+**Things to know:**
+- **Storage:** your data is saved in this browser only. Your phone and laptop keep separate histories, and clearing browser data erases it, so export a backup now and then.
+- **Empty number habits:** a number habit left blank counts as not done for that day.
+- **Streak:** counts consecutive days with at least one habit done. Today counts once you've logged something; until then the streak runs through yesterday.
+
+**Documentation:** I created `habit_tracker/prompts.md` with your first message as Prompt 1, my questions as Output 1, and your answers as Prompt 2. Output 2 says "TBD" for now; I'll paste this message in with your next prompt. The status is `prototype` until you've used it, so it isn't on the home page yet. As before, the model name only needs filling in on line 5.
+
+# Prompt 3 (does it autosave?):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** not-run
+> - **Human edits:** none
+
+Do the habits inputted autosave? I don't see a save button
+
+## Output 3:
+
 TBD (pasted in with the next prompt)
