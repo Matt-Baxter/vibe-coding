@@ -94,4 +94,48 @@ Lengths work, multiple choice, thought_experiments is good
 
 ## Output 3:
 
+The thought experiments app is built and pushed to `main`. Once the site updates, it'll be at **https://matt-baxter.github.io/vibe-coding/thought_experiments/thought-experiments.html** (hard refresh with Ctrl + Shift + R if you see an old copy). I tested it in a headless browser: all three lengths, saving and resuming, the Back button, retakes, and the results screen, with no errors. The layout also works at phone size.
+
+It's one file, `thought_experiments/thought-experiments.html`.
+
+**The thought experiments:** 36 in all, across five themes:
+- **Ethics (8):** the Trolley, the Footbridge, the Surgeon, the Drowning Child, the Murderer at the Door, the Ring of Gyges, Omelas, the Lifeboat
+- **Mind & identity (7):** the Teleporter, Gradual Replacement, Mary's Room, the Chinese Room, the Philosophical Zombie, Mind Upload, the Split
+- **Superintelligence & AI (8):** the Paperclip Maximizer, the Benevolent AI Ruler, the Pause, the Pleading Chatbot, Wireheading, Today or Tomorrow, Whose Values?, the Simulation
+- **Free will & knowledge (6):** Laplace's Demon, the Hidden Chip, Two Criminals, the Brain in a Vat, Newcomb's Problem, the Experience Machine
+- **Meaning & society (7):** the Veil of Ignorance, the Basketball Star, Sisyphus, Eternal Recurrence, Why Bother?, the Unfair Setback, the Kidney Market
+
+**Taking it**
+- Choose **Quick (12)**, **Standard (24)** or **Everything (36)**. Each has 2–3 multiple-choice answers per question, and clicking one moves you to the next.
+- Shorter runs draw from every theme and keep paired puzzles together, like Trolley and Footbridge, so tensions can still show up. Paired puzzles are never back to back.
+- Progress saves as you go. "Save and exit" brings you back later to a "Resume" button, and **← Back** lets you change an answer.
+
+**Results, shown only at the end**
+- **Your headline match,** such as "You think most like a utilitarian", with its key idea.
+- **Five scales:** rules ↔ consequences, individual ↔ collective, mind beyond matter ↔ physical mind, AI cautious ↔ AI optimist, and determinism ↔ free will. Each says how many answers it's based on.
+- **Your top 3 schools of thought,** from 19 in total, each with its thinkers and the questions that pointed there.
+- **Your tensions,** from 10 possible pairs, each explaining the conflict and how philosophers have dealt with it. Example: "Lever yes, push no".
+- **A list of all your answers,** and **Retake with new questions,** which picks thought experiments you haven't seen yet. In my test, the retake had no repeats.
+
+**Choices I made while building it:**
+- **Ranking schools.** The ranking counts both how often you agreed with a school and how many questions back it up. An earlier version let a school win on just two answers.
+- **Wording.** I chose the scenario and answer wording to be brief and even-handed. The mapping from answers to schools is my judgment, a fun approximation rather than a rigorous test, and you may want to say so in class.
+
+**Documentation:** I created `thought_experiments/prompts.md`, tagged `brainstorm`. Your brainstorm request is Prompt 1, your idea refinement is Prompt 2, and your answers are Prompt 3, each with my reply. Output 3 says "TBD" for now; I'll paste this message in with your next prompt. The status is `prototype` until you've tried it, and as before, the model name only needs filling in on line 5.
+
+# Prompt 4 (make every question stand on its own):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Please make sure that every question stands on its own. I'm taking the test and one says:
+
+"Same trolley, same five people. This time you are on a bridge next to a very large stranger. Pushing him onto the track would stop the trolley. He would die; the five would live."
+
+It's written like it assumes you've read a previous question
+
+## Output 4:
+
 TBD (pasted in with the next prompt)

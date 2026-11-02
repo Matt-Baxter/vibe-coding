@@ -239,10 +239,10 @@ const QUESTIONS = [
       { t: "Don't pull it: I won't be the one who kills someone", s: { conseq: -2 }, p: ['kant'] },
     ] },
   { id: 'footbridge', theme: 'ethics', title: 'The Footbridge',
-    text: 'Same trolley, same five people. This time you are on a bridge next to a very large stranger. Pushing him onto the track would stop the trolley. He would die; the five would live.',
+    text: 'A runaway trolley is heading for five people tied to the track. You are standing on a footbridge above the track, next to a very large stranger. Pushing him off the bridge would stop the trolley. He would die, and the five would live.',
     ask: 'Do you push him?',
     o: [
-      { t: 'Push him: the numbers are the same as with the lever', s: { conseq: 2 }, p: ['util'] },
+      { t: 'Push him: one death is better than five', s: { conseq: 2 }, p: ['util'] },
       { t: "Don't push: using a person as a tool is wrong", s: { conseq: -2 }, p: ['kant'] },
     ] },
   { id: 'surgeon', theme: 'ethics', title: 'The Surgeon',
