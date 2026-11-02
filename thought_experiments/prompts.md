@@ -4,7 +4,7 @@
 > - **Dates:** 2026-11-02 → 2026-11-02
 > - **Defaults:** Claude Code · model TBD · medium effort
 > - **Status:** prototype
-> - **Use:** none yet
+> - **Use:** took the full 36-question run on the live site 2026-11-02
 > - **Reusability:** artifact TBD · prompt pattern TBD
 > - **Tags:** single-file-html, brainstorm, localStorage
 > - **Takeaway (draft):** Brainstorming from a list of interests, then shaping the chosen idea through one round of design questions, turned a vague "something about philosophy" into a concrete app before any code.
@@ -87,8 +87,8 @@ A few quick questions:
 
 > - **Tool:** 2026-11-02
 > - **Session:** continued · attached: none
-> - **Verified:** agent-tested
-> - **Human edits:** none
+> - **Verified:** human-tested
+> - **Human edits:** none. Verified raised from agent-tested after I took all 36 questions (Prompt 5).
 
 Lengths work, multiple choice, thought_experiments is good
 
@@ -137,5 +137,29 @@ Please make sure that every question stands on its own. I'm taking the test and 
 It's written like it assumes you've read a previous question
 
 ## Output 4:
+
+I rewrote the Footbridge so it stands on its own, and checked all 36 questions; it was the only one that relied on another question. The fix is pushed to `main`.
+
+**The rewritten Footbridge:**
+> A runaway trolley is heading for five people tied to the track. You are standing on a footbridge above the track, next to a very large stranger. Pushing him off the bridge would stop the trolley. He would die, and the five would live.
+
+Its "push" answer also leaned on the Trolley question: "Push him: the numbers are the same as with the lever". It's now "Push him: one death is better than five".
+
+**How I checked the rest:** I searched every scenario, question and answer for words that point at other questions, like "same", "again", "this time", "previous" and "the lever". Other matches turned out to refer to something inside their own question, such as "the same violent crime" in Two Criminals, so they were fine. The results page still names both questions in a pair, like "Lever yes, push no", but that's intended, since by then you've answered both. I re-ran my tests afterwards, with no errors.
+
+**Your test in progress:** answers are saved by question, not by wording, so your progress isn't affected. Hard refresh (**Ctrl + Shift + R**) and click **Resume** to carry on with the new wording.
+
+**Documentation:** I pasted Output 3 into `thought_experiments/prompts.md` and recorded this request as Prompt 4. Output 4 will be added with your next message.
+
+# Prompt 5 (make the wording natural):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+I took the quiz, all 36 questions. Some of them were worded kind of awkwardly, but I don't have specific advice for how to change them. I would just make sure that both the quiz questions and the answers are phrased in a way that's natural and not sudden or abrupt
+
+## Output 5:
 
 TBD (pasted in with the next prompt)
