@@ -3,13 +3,13 @@
 > - **Files:** thought-experiments.html
 > - **Dates:** 2026-11-02 → 2026-11-02
 > - **Defaults:** Claude Code · model TBD · medium effort
-> - **Status:** prototype
+> - **Status:** keeper
 > - **Use:** took the full 36-question run on the live site 2026-11-02
-> - **Reusability:** artifact TBD · prompt pattern TBD
+> - **Reusability:** artifact medium · prompt pattern high
 > - **Tags:** single-file-html, brainstorm, localStorage
-> - **Takeaway (draft):** Brainstorming from a list of interests, then shaping the chosen idea through one round of design questions, turned a vague "something about philosophy" into a concrete app before any code.
-> - **Story value:** TBD
-> - **Surprises:** TBD
+> - **Takeaway:** Brainstorming from a list of interests, then shaping the chosen idea through one round of design questions, turned a vague "something about philosophy" into a concrete app before any code.
+> - **Story value:** case study
+> - **Surprises:** The app passed every automated test, but taking the full quiz myself turned up problems the tests couldn't: one question (the Footbridge) only made sense if you'd read the Trolley question first, and many answers were phrased in a clipped, abrupt way. Both were fixed by rewriting the text, without touching the scoring.
 
 # Prompt 1 (brainstorm an idea from my interests):
 
@@ -161,5 +161,35 @@ Its "push" answer also leaned on the Trolley question: "Push him: the numbers ar
 I took the quiz, all 36 questions. Some of them were worded kind of awkwardly, but I don't have specific advice for how to change them. I would just make sure that both the quiz questions and the answers are phrased in a way that's natural and not sudden or abrupt
 
 ## Output 5:
+
+I rewrote all 36 thought experiments so the scenarios, questions and answers read as natural, complete sentences. It's pushed to `main`; hard refresh (**Ctrl + Shift + R**) to see the new wording.
+
+**What changed:**
+- **Answers no longer use clipped labels.** "Pull it: one death is better than five" is now "Yes. Losing one life is better than losing five." Each answer is a full sentence, written the way a person would say it.
+- **Scenarios set the scene before the dilemma.** The Murderer at the Door used to open with "A friend is hiding in your house. A man with a knife knocks…". It now reads: "A friend is hiding in your house from someone who wants to hurt her. There's a knock at the door. It's the man who is after her, and he asks you whether she's inside."
+- **Questions are full, natural sentences.** "Do you pull the lever?" became "Would you pull the lever?", and "Do you have the same duty to give?" became "Are you just as obligated to give to the charity as you were to save the child in the pond?"
+- **The tension explanations on the results page got the same treatment.** I also fixed a factual slip there: the old note said Rawls and Nozick answered the basketball example in opposite ways. In fact Nozick created that example to argue against Rawls.
+
+**What stayed the same:** the answer order, the scoring, and the 10 tension pairs. I checked by program that only the wording changed, then re-ran my tests with no errors. All 10 tensions still trigger correctly.
+
+**Your earlier results:** answers are saved by question and answer position, so your finished 36-question run now shows up with the new wording and the same results.
+
+**Documentation in `thought_experiments/prompts.md`:**
+- I pasted Output 4 and recorded this message as Prompt 5. Output 5 will be added with your next message.
+- You took all 36 questions, so Prompt 3's Verified is now `human-tested`, with a note in Human edits.
+- **Use** now reads "took the full 36-question run on the live site 2026-11-02".
+
+The status is still `prototype`. When you're happy with the wording, I can mark it `keeper` and add it to the home page, like the other two.
+
+# Prompt 6 (mark as keeper, add to home page):
+
+> - **Tool:** 2026-11-02
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+mark it as keeper and add it to the site
+
+## Output 6:
 
 TBD (pasted in with the next prompt)
