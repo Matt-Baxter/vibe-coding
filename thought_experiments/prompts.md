@@ -2,10 +2,10 @@
 
 > - **Files:** thought-experiments.html
 > - **Dates:** 2026-11-02 → 2026-11-02
-> - **Defaults:** Claude Code · model TBD · medium effort
+> - **Defaults:** Claude Code · model Opus 5.5 · medium effort
 > - **Status:** keeper
 > - **Use:** took the full 36-question run on the live site 2026-11-02
-> - **Reusability:** artifact medium · prompt pattern high
+> - **Reusability:** artifact medium · prompt pattern low
 > - **Tags:** single-file-html, brainstorm, localStorage
 > - **Takeaway:** Brainstorming from a list of interests, then shaping the chosen idea through one round of design questions, turned a vague "something about philosophy" into a concrete app before any code.
 > - **Story value:** case study
