@@ -2,10 +2,10 @@
 
 > - **Files:** habit-tracker.html
 > - **Dates:** 2026-11-02 → 2026-11-02 (about 22 min of work in total, timed by me)
-> - **Defaults:** Claude Code · model TBD · medium effort
+> - **Defaults:** Claude Code · model Opus 5.5 · medium effort
 > - **Status:** keeper
 > - **Use:** tried on the live GitHub Pages site 2026-11-02
-> - **Reusability:** artifact high · prompt pattern medium
+> - **Reusability:** artifact high · prompt pattern low
 > - **Tags:** single-file-html, productivity, localStorage, export-import
 > - **Takeaway:** Settling storage, number-habit goals and what happens to past days before any code meant the whole app came out of one build prompt.
 > - **Story value:** anecdote
