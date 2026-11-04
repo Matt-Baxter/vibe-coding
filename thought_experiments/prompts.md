@@ -192,4 +192,23 @@ mark it as keeper and add it to the site
 
 ## Output 6:
 
-TBD (pasted in with the next prompt)
+The thought experiments app is now a `keeper` and has a card on the home page, and it's pushed to `main`. Give the site a minute, then hard refresh with **Ctrl + Shift + R**. I tested the home page in a headless browser: it shows "5 projects", and clicking the Thought Experiments card opens the app.
+
+**Home page:** the card reads "36 philosophy and AI dilemmas, then a profile of how you think." Its thumbnail, `_thumbs/thought-experiments.png`, shows a sample results page.
+
+**`thought_experiments/prompts.md` header:**
+- **Status:** `keeper`
+- **Takeaway:** "(draft)" removed.
+
+**I filled in three fields with my own judgment,** as before. Change any you disagree with:
+- **Reusability:** `artifact medium · prompt pattern high`. The quiz is fun but mostly a one-time experience. The pattern of brainstorming from your interests, then shaping the idea with questions, is very reusable.
+- **Story value:** `case study`. This one has the best story of the three apps: it passed all my automated tests, but you found real problems by taking it, namely the Footbridge question that depended on the Trolley question, and the abrupt wording. That's a good point to make in class about the limits of AI self-testing.
+- **Surprises:** that same point, written up.
+
+**Record kept up to date:** I pasted Output 5 and recorded this message as Prompt 6. Output 6 will be added with your next message.
+
+**Still for you:**
+- **Time spent:** you timed the other two apps. If you timed this one, tell me and I'll add it to **Dates** like the others.
+- **Model name:** line 5 still says `model TBD`.
+
+That's all three apps done for the assignment.
